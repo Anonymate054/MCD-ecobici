@@ -1,0 +1,481 @@
+sistema,num_cicloestacion,nombre,calle_principal,calle_secundaria,colonia,alcaldia,latitud,longitud,tipo_ce,candados
+ECOBICI,1,Río Sena - Río Balsas,Río Sena,Río Balsas,Cuauhtémoc,CUAUHTEMOC,19.4335895,-99.1678193,4G,27
+ECOBICI,2,Río Guadalquivir - Río Nazas,Río Guadalquivir,Río Nazas,Cuauhtémoc,CUAUHTEMOC,19.43051,-99.171201,3G,21
+ECOBICI,3,Reforma - Insurgentes,Reforma,Insurgentes,Tabacalera,CUAUHTEMOC,19.43163,-99.158547,4G,36
+ECOBICI,4,Río Nilo - Río Pánuco,Río Nilo,Río Pánuco,Cuauhtémoc,CUAUHTEMOC,19.428491,-99.171693,3G,15
+ECOBICI,5,Río Pánuco - Río Tíber,Río Pánuco,Río Tíber,Cuauhtémoc,CUAUHTEMOC,19.429804,-99.169451,3G,12
+ECOBICI,6,Río Pánuco - Río Sena,Río Pánuco,Río Sena,Cuauhtémoc,CUAUHTEMOC,19.430963,-99.166986,3G,15
+ECOBICI,7,Río Elba - Río Lerma,Río Elba,Río Lerma,Cuauhtémoc,CUAUHTEMOC,19.425355,-99.17515,3G,24
+ECOBICI,8,Reforma - General Prim,Reforma,General Prim,Tabacalera,CUAUHTEMOC,19.431256,-99.158153,3G,12
+ECOBICI,9,Río Guadalquivir - Río Lerma,Río Guadalquivir,Río Lerma,Cuauhtémoc,CUAUHTEMOC,19.428184,-99.170013,3G,24
+ECOBICI,10,Reforma - Ramírez,Reforma,Ramírez,Tabacalera,CUAUHTEMOC,19.433431,-99.155142,4G,36
+ECOBICI,11,Río Amazonas - Río Lerma,Río Amazonas,Río Lerma,Cuauhtémoc,CUAUHTEMOC,19.431192,-99.163546,3G,15
+ECOBICI,12,Río Lerma - Villalongín,Río Lerma,Villalongín,Cuauhtémoc,CUAUHTEMOC,19.432223,-99.161686,3G,15
+ECOBICI,13,Reforma - Río Mississippi,Reforma,Río Mississippi,Cuauhtémoc,CUAUHTEMOC,19.424941,-99.17233,4G,36
+ECOBICI,14,Reforma - Río de la Plata,Reforma,Río de la Plata,Cuauhtémoc,CUAUHTEMOC,19.42454,-99.173247,3G,36
+ECOBICI,15,Reforma - Río Mississippi,Reforma,Río Mississippi,Cuauhtémoc,CUAUHTEMOC,19.425597,-99.171409,4G,24
+ECOBICI,16,Reforma - Río Tíber,Reforma,Río Tíber,Cuauhtémoc,CUAUHTEMOC,19.426898,-99.168422,3G,36
+ECOBICI,17,Reforma - Río Tíber,Reforma,Río Tíber,Cuauhtémoc,CUAUHTEMOC,19.427553,-99.167396,4G,27
+ECOBICI,18,Reforma - Río Rhin,Reforma,Río Rhin,Cuauhtémoc,CUAUHTEMOC,19.428802,-99.164381,4G,36
+ECOBICI,19,Reforma - Río Rhin,Reforma,Río Rhin,Cuauhtémoc,CUAUHTEMOC,19.429453,-99.16283,4G,24
+ECOBICI,20,Reforma - Río Támesis,Reforma,Río Támesis,Cuauhtémoc,CUAUHTEMOC,19.430907,-99.160148,3G,24
+ECOBICI,21,Reforma - Dublín,Reforma,Dublín,Juárez,CUAUHTEMOC,19.424784,-99.172119,4G,27
+ECOBICI,22,Reforma - Manchester,Reforma,Manchester,Juárez,CUAUHTEMOC,19.424784,-99.172119,4G,36
+ECOBICI,23,Reforma - Praga,Reforma,Praga,Juárez,CUAUHTEMOC,19.42528,-99.171099,3G,36
+ECOBICI,24,Reforma - Varsovia,Reforma,Varsovia,Juárez,CUAUHTEMOC,19.426614,-99.168078,4G,27
+ECOBICI,25,Reforma - Estocolmo,Reforma,Estocolmo,Juárez,CUAUHTEMOC,19.427338,-99.16672,3G,27
+ECOBICI,26,Reforma - Versalles,Reforma,Versalles,Juárez,CUAUHTEMOC,19.432595,-99.154995,4G,18
+ECOBICI,27,Reforma - Havre,Reforma,Havre,Juárez,CUAUHTEMOC,19.42916,-99.162703,4G,36
+ECOBICI,28,Toledo - Tokio,Toledo,Tokio,Juárez,CUAUHTEMOC,19.423664,-99.172568,3G,27
+ECOBICI,29,Reforma - Bucareli,Reforma,Bucareli,Centro,CUAUHTEMOC,19.434944,-99.150295,4G,36
+ECOBICI,30,Hamburgo - Génova,Hamburgo,Génova,Juárez,CUAUHTEMOC,19.426384,-99.164255,4G,36
+ECOBICI,31,Hamburgo - Insurgentes,Hamburgo,Insurgentes,Juárez,CUAUHTEMOC,19.427937,-99.161245,3G,36
+ECOBICI,32,Londres - Sevilla,Londres,Sevilla,Juárez,CUAUHTEMOC,19.4226672,-99.1699751,3G,36
+ECOBICI,33,Londres - Florencia,Londres,Florencia,Juárez,CUAUHTEMOC,19.424187,-99.166497,Multimedial,24
+ECOBICI,34,Liverpool - Génova,Liverpool,Génova,Juárez,CUAUHTEMOC,19.424584,-99.163688,3G,36
+ECOBICI,35,Liverpool - Génova,Liverpool,Génova,Juárez,CUAUHTEMOC,19.424558,-99.163518,4G,36
+ECOBICI,36,Puebla - Veracruz,Puebla,Veracruz,Roma Norte,CUAUHTEMOC,19.41966,-99.17588,4G,33
+ECOBICI,37,Guadalajara - Puebla,Guadalajara,Puebla,Roma Norte,CUAUHTEMOC,19.4204398,-99.1727208,3G,21
+ECOBICI,38,Cozumel - Puebla,Cozumel,Puebla,Roma Norte,CUAUHTEMOC,19.4208433,-99.1713729,3G,36
+ECOBICI,39,Puebla - Medellín,Puebla,Medellín,Roma Norte,CUAUHTEMOC,19.421762,-99.166931,3G,21
+ECOBICI,40,Oaxaca - Puebla,Oaxaca,Puebla,Roma Norte,CUAUHTEMOC,19.422379,-99.164137,3G,24
+ECOBICI,41,Reforma - De la República,Reforma,De la República,Tabacalera,CUAUHTEMOC,19.43542,-99.150317,4G,36
+ECOBICI,42,Sinaloa - Valladolid,Sinaloa,Valladolid,Roma Norte,CUAUHTEMOC,19.420627,-99.16821,3G,24
+ECOBICI,43,Juárez - Dr. Mora,Juárez,Dr. Mora,Centro,CUAUHTEMOC,19.4351365,-99.1460756,4G,33
+ECOBICI,44,Durango - Veracruz,Durango,Veracruz,Roma Norte,CUAUHTEMOC,19.418141,-99.174709000000007,3G,27
+ECOBICI,45,Durango - Sonora,Durango,Sonora,Roma Norte,CUAUHTEMOC,19.418749,-99.171942,4G,36
+ECOBICI,46,Durango - Salamanca,Durango,Salamanca,Roma Norte,CUAUHTEMOC,19.41919,-99.169764,3G,36
+ECOBICI,47,Plaza Madrid - Medellín,Plaza Madrid,Medellín,Roma Norte,CUAUHTEMOC,19.41955,-99.166214,4G,24
+ECOBICI,48,Independencia - Azueta,Independencia,Azueta,Centro,CUAUHTEMOC,19.433705,-99.146665,3G,12
+ECOBICI,49,Mazatlán - Juan de la Barrera,Mazatlán,Juan de la Barrera,Condesa,CUAUHTEMOC,19.41689,-99.17562,3G,36
+ECOBICI,50,Cuernavaca - Veracruz,Cuernavaca,Veracruz,Condesa,CUAUHTEMOC,19.416886,-99.173591,3G,27
+ECOBICI,51,Colima - Oaxaca,Colima,Oaxaca,Roma Norte,CUAUHTEMOC,19.418031,-99.168435,3G,27
+ECOBICI,52,Hidalgo - Trujano,Hidalgo,Trujano,Centro,CUAUHTEMOC,19.436208,-99.141931,4G,21
+ECOBICI,53,Fernando Montes de Oca - Tula,Fernando Montes de Oca,Tula,Condesa,CUAUHTEMOC,19.4148233,-99.1783527,3G,15
+ECOBICI,54,Parque España - Sonora,Parque España,Sonora,Condesa,CUAUHTEMOC,19.416163,-99.170795,4G,36
+ECOBICI,55,5 de Mayo - Bolívar,5 de Mayo,Bolívar,Centro,CUAUHTEMOC,19.434514,-99.138068,4G,15
+ECOBICI,56,Álvaro Obregón - Medellín,Álvaro Obregón,Medellín,Roma Norte,CUAUHTEMOC,19.417102,-99.165607,3G,36
+ECOBICI,57,Cuernavaca - Juan Escutia,Cuernavaca,Juan Escutia,Condesa,CUAUHTEMOC,19.414968,-99.174766,3G,12
+ECOBICI,58,Parque España - Juan de la Barrera,Parque España,Juan de la Barrera,Condesa,CUAUHTEMOC,19.415358,-99.171902,3G,27
+ECOBICI,59,Popocatépetl - Ámsterdam,Popocatépetl,Ámsterdam,Hipódromo,CUAUHTEMOC,19.415237,-99.16659,3G,36
+ECOBICI,60,Mazatlán - Fernando Montes de Oca,Mazatlán,Fernando Montes de Oca,Condesa,CUAUHTEMOC,19.414119,-99.177214,3G,36
+ECOBICI,61,Avenida México - Sonora,Avenida México,Sonora,Hipódromo,CUAUHTEMOC,19.413789,-99.169427,4G,36
+ECOBICI,62,Fernando Montes de Oca - Amatlán,Fernando Montes de Oca,Amatlán,Condesa,CUAUHTEMOC,19.413314,-99.175225,3G,18
+ECOBICI,63,Nuevo León - Laredo,Nuevo León,Laredo,Hipódromo,CUAUHTEMOC,19.41299,-99.171675,4G,36
+ECOBICI,64,Sonora - Ámsterdam,Sonora,Ámsterdam,Hipódromo,CUAUHTEMOC,19.412982,-99.166936,3G,36
+ECOBICI,65,Marconi - Tacuba,Marconi,Tacuba,Centro,CUAUHTEMOC,19.436522,-99.139811,4G,18
+ECOBICI,66,Mazatlán - Francisco Márquez,Mazatlán,Francisco Márquez,Condesa,CUAUHTEMOC,19.411825,-99.178456,3G,27
+ECOBICI,67,Vicente Suárez - Michoacán,Vicente Suárez,Michoacán,Condesa,CUAUHTEMOC,19.411703,-99.175753,3G,24
+ECOBICI,68,Tamaulipas - Michoacán,Tamaulipas,Michoacán,Condesa,CUAUHTEMOC,19.411771,-99.173783,4G,30
+ECOBICI,69,Michoacán - Ámsterdam,Michoacán,Ámsterdam,Hipódromo,CUAUHTEMOC,19.410797,-99.168143,3G,21
+ECOBICI,70,Parque México - Michoacán,Parque México,Michoacán,Hipódromo,CUAUHTEMOC,19.41128,-99.169825,4G,36
+ECOBICI,71,Ámsterdam - Michoacán,Ámsterdam,Michoacán,Hipódromo,CUAUHTEMOC,19.411361,-99.171271,3G,36
+ECOBICI,72,Mazatlán - Alfonso Reyes,Mazatlán,Alfonso Reyes,Hipódromo Condesa,CUAUHTEMOC,19.409859,-99.179565,3G,27
+ECOBICI,73,Campeche - Tamaulipas,Campeche,Tamaulipas,Hipódromo Condesa,CUAUHTEMOC,19.410073,-99.175542,3G,36
+ECOBICI,74,Nuevo León - Ozuluama,Nuevo León,Ozuluama,Hipódromo,CUAUHTEMOC,19.410468,-99.172802,3G,27
+ECOBICI,75,Alfonso Reyes - Atlixco,Alfonso Reyes,Atlixco,Hipódromo Condesa,CUAUHTEMOC,19.408676,-99.176759,3G,15
+ECOBICI,76,Chilpancingo - Campeche,Chilpancingo,Campeche,Hipódromo,CUAUHTEMOC,19.4086886,-99.169938,3G,21
+ECOBICI,77,Choapan - Tamaulipas,Choapan,Tamaulipas,Hipódromo,CUAUHTEMOC,19.406745,-99.178272,3G,15
+ECOBICI,78,Benjamín Hill - Tamaulipas,Benjamín Hill,Tamaulipas,Hipódromo,CUAUHTEMOC,19.407512,-99.177361,4G,36
+ECOBICI,79,Saltillo - Alfonso Reyes,Saltillo,Alfonso Reyes,Hipódromo,CUAUHTEMOC,19.407479,-99.174403,3G,27
+ECOBICI,80,Nuevo León - Aguascalientes,Nuevo León,Aguascalientes,Hipódromo,CUAUHTEMOC,19.407233,-99.172131,3G,36
+ECOBICI,81,Aguascalientes - Insurgentes,Aguascalientes,Insurgentes,Hipódromo,CUAUHTEMOC,19.407927,-99.168734,3G,27
+ECOBICI,82,Independencia - Marroquí,Independencia,Marroquí,Centro,CUAUHTEMOC,19.433344,-99.14404,4G,12
+ECOBICI,83,Alfonso Reyes - Nuevo León,Alfonso Reyes,Nuevo León,Hipódromo,CUAUHTEMOC,19.40655,-99.172275,4G,15
+ECOBICI,84,Chilpancingo - Tlaxcala,Chilpancingo,Tlaxcala,Hipódromo,CUAUHTEMOC,19.406872,-99.169572,3G,21
+ECOBICI,85,José Rosas Moreno - Sullivan,José Rosas Moreno,Sullivan,San Rafael,CUAUHTEMOC,19.434081,-99.162434,3G,15
+ECOBICI,86,Sullivan - Insurgentes,Sullivan,Insurgentes,San Rafael,CUAUHTEMOC,19.432452,-99.15924,4G,21
+ECOBICI,87,Gante - Venustiano Carranza,Gante,Venustiano Carranza,Centro,CUAUHTEMOC,19.432024,-99.139705,4G,24
+ECOBICI,88,2da cerrada de 5 de Mayo - Palma,2da cerrada de 5 de Mayo,Palma,Centro,CUAUHTEMOC,19.433757,-99.135331,3G,15
+ECOBICI,89,República de Guatemala - Monte de Piedad,República de Guatemala,Monte de Piedad,Centro,CUAUHTEMOC,19.434962,-99.133729,4G,12
+ECOBICI,90,José María Pino Suárez - Corregidora,José María Pino Suárez,Corregidora,Centro,CUAUHTEMOC,19.43144,-99.132513,4G,27
+ECOBICI,91,República de Cuba - Allende,República de Cuba,Allende,Centro,CUAUHTEMOC,19.4374,-99.137571,3G,21
+ECOBICI,92,San Ildefonso - República de Argentina,San Ildefonso,República de Argentina,Centro,CUAUHTEMOC,19.436531,-99.131497,3G,21
+ECOBICI,93,Palma Norte - República de Cuba,Palma Norte,República de Cuba,Centro,CUAUHTEMOC,19.436741,-99.134811,3G,36
+ECOBICI,94,Lic. Primo de Verdad - Moneda,Lic. Primo de Verdad,Moneda,Centro,CUAUHTEMOC,19.433766,-99.130918,3G,24
+ECOBICI,95,20 de Noviembre - Venustiano Carranza,20 de Noviembre,Venustiano Carranza,Centro,CUAUHTEMOC,19.430722,-99.133698,3G,18
+ECOBICI,96,López - Ayuntamiento,López,Ayuntamiento,Centro,CUAUHTEMOC,19.430625,-99.14248,3G,36
+ECOBICI,97,República de Salvador - Pino Suárez,República de Salvador,Pino Suárez,Centro,CUAUHTEMOC,19.429189,-99.132759,4G,27
+ECOBICI,98,Emilio Dondé - Av. Balderas,Emilio Dondé,Av. Balderas,Centro,CUAUHTEMOC,19.430267,-99.14861,3G,36
+ECOBICI,99,Ernesto Pugibet - Luis Moya,Ernesto Pugibet,Luis Moya,Centro,CUAUHTEMOC,19.429947,-99.14591,3G,30
+ECOBICI,100,20 de Noviembre - Mesones,20 de Noviembre,Mesones,Centro,CUAUHTEMOC,19.428485,-99.1338,3G,24
+ECOBICI,101,1er. Callejón de Mesones - Mesones,1er. Callejón de Mesones,Mesones,Centro,CUAUHTEMOC,19.428366,-99.135895,3G,33
+ECOBICI,102,Echeveste - Bolívar,Echeveste,Bolívar,Centro,CUAUHTEMOC,19.428214,-99.139494,3G,15
+ECOBICI,103,Joaquín Velázquez de León - García Icazbalceta,Joaquín Velázquez de León,García Icazbalceta,San Rafael,CUAUHTEMOC,19.441533,-99.165268,3G,27
+ECOBICI,104,San Jerónimo - Isabel la Católica,San Jerónimo,Isabel la Católica,Centro,CUAUHTEMOC,19.427059,-99.137116,4G,15
+ECOBICI,105,San Jerónimo - 5 de Febrero,San Jerónimo,5 de Febrero,Centro,CUAUHTEMOC,19.426755,-99.135014,3G,24
+ECOBICI,106,San Jerónimo - José María Pino Suarez,San Jerónimo,José María Pino Suarez,Centro,CUAUHTEMOC,19.42649,-99.133537,3G,27
+ECOBICI,107,Tolsá - Balderas,Tolsá,Balderas,Centro,CUAUHTEMOC,19.427329,-99.149971,3G,36
+ECOBICI,108,Tolsá - Balderas,Tolsá,Balderas,Centro,CUAUHTEMOC,19.427305,-99.149533,Multimedial,24
+ECOBICI,109,Nezahualcóyotl - Isabel la Católica,Nezahualcóyotl,Isabel la Católica,Centro,CUAUHTEMOC,19.425311,-99.137421,3G,30
+ECOBICI,110,Dr. Valenzuela - Dr. Río de la Loza,Dr. Valenzuela,Dr. Río de la Loza,Doctores,CUAUHTEMOC,19.425126,-99.143391,3G,36
+ECOBICI,111,Guillermo Prieto - Joaquín Velázquez de León,Guillermo Prieto,Joaquín Velázquez de León,San Rafael,CUAUHTEMOC,19.438197,-99.165918,3G,24
+ECOBICI,112,Av. Morelos - Abraham González,Av. Morelos,Abraham González,Juárez,CUAUHTEMOC,19.432819,-99.151734,3G,24
+ECOBICI,113,General Prim - Versalles,General Prim,Versalles,Juárez,CUAUHTEMOC,19.430369,-99.154419,3G,21
+ECOBICI,114,Lucerna - Abraham González,Lucerna,Abraham González,Juárez,CUAUHTEMOC,19.428989,-99.153618,3G,24
+ECOBICI,115,Roma - Dinamarca,Roma,Dinamarca,Juárez,CUAUHTEMOC,19.429947,-99.159698,3G,27
+ECOBICI,116,Londres - Roma,Londres,Roma,Juárez,CUAUHTEMOC,19.428985,-99.15664,3G,24
+ECOBICI,117,Londres - Nápoles,Londres,Nápoles,Juárez,CUAUHTEMOC,19.427132,-99.160369,3G,33
+ECOBICI,118,Liverpool - Dinamarca,Liverpool,Dinamarca,Juárez,CUAUHTEMOC,19.427114,-99.158251,3G,21
+ECOBICI,119,Turín - Abraham González,Turín,Abraham González,Juárez,CUAUHTEMOC,19.426785,-99.155535,3G,33
+ECOBICI,120,Marsella - Nápoles,Marsella,Nápoles,Juárez,CUAUHTEMOC,19.425437,-99.159458,3G,24
+ECOBICI,121,Niza - Chapultepec,Niza,Chapultepec,Juárez,CUAUHTEMOC,19.424137,-99.161317,3G,18
+ECOBICI,122,José María Vértiz - Av. Dr. Río de la Loza,José María Vértiz,Av. Dr. Río de la Loza,Doctores,CUAUHTEMOC,19.425502,-99.146337,3G,30
+ECOBICI,123,Claudio Bernard - Dr. Lavista,Claudio Bernard,Dr. Lavista,Doctores,CUAUHTEMOC,19.424161,-99.153117,3G,30
+ECOBICI,124,Claudio Bernard - Dr. Liceaga,Claudio Bernard,Dr. Liceaga,Doctores,CUAUHTEMOC,19.422392,-99.150358,3G,36
+ECOBICI,125,Morelia - Circular de Morelia,Morelia,Circular de Morelia,Roma Norte,CUAUHTEMOC,19.424197,-99.156127,3G,36
+ECOBICI,126,Jalapa - Puebla,Jalapa,Puebla,Roma Norte,CUAUHTEMOC,19.422288000000002,-99.162138,3G,36
+ECOBICI,127,Puebla - Mérida,Puebla,Mérida,Roma Norte,CUAUHTEMOC,19.423318,-99.15833,3G,30
+ECOBICI,128,Orizaba - Río de Janeiro,Orizaba,Río de Janeiro,Roma Norte,CUAUHTEMOC,19.422148,-99.160645,4G,24
+ECOBICI,129,Tonalá - Durango,Tonalá,Durango,Roma Norte,CUAUHTEMOC,19.4206,-99.163312,3G,24
+ECOBICI,130,Mérida - Durango,Mérida,Durango,Roma Norte,CUAUHTEMOC,19.421576,-99.158015,3G,21
+ECOBICI,131,Colima - Jalapa,Colima,Jalapa,Roma Norte,CUAUHTEMOC,19.419579,-99.161314,3G,18
+ECOBICI,132,Colima - Frontera,Colima,Frontera,Roma Norte,CUAUHTEMOC,19.420667,-99.15645,3G,24
+ECOBICI,133,Colima - Morelia,Colima,Morelia,Roma Norte,CUAUHTEMOC,19.421138,-99.154725,3G,36
+ECOBICI,134,Álvaro Obregón - Orizaba,Álvaro Obregón,Orizaba,Roma Norte,CUAUHTEMOC,19.418304,-99.15956,4G,33
+ECOBICI,135,Álvaro Obregón - Morelia,Álvaro Obregón,Morelia,Roma Norte,CUAUHTEMOC,19.419225,-99.155099,4G,36
+ECOBICI,136,Álvaro Obregón - Tonalá,Álvaro Obregón,Tonalá,Roma Norte,CUAUHTEMOC,19.417715,-99.162729,4G,27
+ECOBICI,137,Álvaro Obregón - Mérida,Álvaro Obregón,Mérida,Roma Norte,CUAUHTEMOC,19.418774,-99.157081,3G,27
+ECOBICI,138,Guanajuato - Frontera,Guanajuato,Frontera,Roma Norte,CUAUHTEMOC,19.417702,-99.155313,3G,24
+ECOBICI,139,Tonalá - Guanajuato,Tonalá,Guanajuato,Roma Norte,CUAUHTEMOC,19.416128,-99.162097,Multimedial,24
+ECOBICI,140,Mérida - Zacatecas,Mérida,Zacatecas,Roma Norte,CUAUHTEMOC,19.416596,-99.156879,3G,18
+ECOBICI,141,Zacatecas - Luis Cabrera,Zacatecas,Luis Cabrera,Roma Norte,CUAUHTEMOC,19.415905,-99.15954,4G,30
+ECOBICI,142,San Luis Potosí - Eje 2 Pte. Monterrey,San Luis Potosí,Eje 2 Pte. Monterrey,Roma Norte,CUAUHTEMOC,19.413232,-99.164121,3G,30
+ECOBICI,143,Córdoba - San Luis Potosí,Córdoba,San Luis Potosí,Roma Norte,CUAUHTEMOC,19.414303,-99.157542,3G,21
+ECOBICI,144,Frontera - San Luis Potosí,Frontera,San Luis Potosí,Roma Norte,CUAUHTEMOC,19.415192,-99.154837,3G,27
+ECOBICI,145,Yucatán - Chiapas,Yucatán,Chiapas,Roma Norte,CUAUHTEMOC,19.41286,-99.160661,3G,27
+ECOBICI,146,Coahuila - Manzanillo,Coahuila,Manzanillo,Roma Norte,CUAUHTEMOC,19.410737,-99.165716,3G,24
+ECOBICI,147,Coahuila - Orizaba,Coahuila,Orizaba,Roma Norte,CUAUHTEMOC,19.412182,-99.158443,3G,27
+ECOBICI,148,Coahuila - Av. Cuauhtémoc,Coahuila,Av. Cuauhtémoc,Roma Norte,CUAUHTEMOC,19.412829,-99.155116,3G,24
+ECOBICI,149,Mérida - Antonio M. Anza,Mérida,Antonio M. Anza,Roma Sur,CUAUHTEMOC,19.41199,-99.155699,3G,33
+ECOBICI,150,Campeche - Medellín,Campeche,Medellín,Roma Sur,CUAUHTEMOC,19.409894,-99.164288,3G,27
+ECOBICI,151,Campeche - Tonalá,Campeche,Tonalá,Roma Sur,CUAUHTEMOC,19.410529,-99.160873,3G,27
+ECOBICI,152,Tlacotalpan - Campeche,Tlacotalpan,Campeche,Roma Sur,CUAUHTEMOC,19.409098,-99.167181,4G,30
+ECOBICI,153,Manzanillo - Tlaxcala,Manzanillo,Tlaxcala,Roma Sur,CUAUHTEMOC,19.407468,-99.165141,3G,21
+ECOBICI,154,Tuxpan - Tlaxcala,Tuxpan,Tlaxcala,Roma Sur,CUAUHTEMOC,19.406683,-99.167962,4G,33
+ECOBICI,155,Jalapa - Tlaxcala,Jalapa,Tlaxcala,Roma Sur,CUAUHTEMOC,19.408218,-99.159911,Multimedial,24
+ECOBICI,156,Tepic - Ario,Tepic,Ario,Roma Sur,CUAUHTEMOC,19.406959,-99.163021,3G,18
+ECOBICI,157,Tepic - Tlacotalpan,Tepic,Tlacotalpan,Roma Sur,CUAUHTEMOC,19.406236,-99.166616,3G,30
+ECOBICI,158,Huatabampo - Eje 1 Pte. Av. Cuauhtémoc,Huatabampo,Eje 1 Pte. Av. Cuauhtémoc,Roma Sur,CUAUHTEMOC,19.407507,-99.155541,4G,36
+ECOBICI,159,Huatabampo - Eje 1 Pte. Av. Cuauhtémoc,Huatabampo,Eje 1 Pte. Av. Cuauhtémoc,Roma Sur,CUAUHTEMOC,19.407517,-99.155373,3G,36
+ECOBICI,160,Alfonso Herrera - Gabino Barreda,Alfonso Herrera,Gabino Barreda,San Rafael,CUAUHTEMOC,19.440252,-99.163455,Multimedial,24
+ECOBICI,161,Quintana Roo - Manzanillo,Quintana Roo,Manzanillo,Roma Sur,CUAUHTEMOC,19.405533,-99.164913,3G,21
+ECOBICI,162,Tehuantepec - Medellín,Tehuantepec,Medellín,Roma Sur,CUAUHTEMOC,19.404907,-99.162485,3G,27
+ECOBICI,163,Toluca - Bajío,Toluca,Bajío,Roma Sur,CUAUHTEMOC,19.405246000000002,-99.15643,3G,36
+ECOBICI,164,Bajío - Tlacotalpan,Bajío,Tlacotalpan,Roma Sur,CUAUHTEMOC,19.403204,-99.16596,3G,27
+ECOBICI,165,Bajío - Eje 2 Pte. Monterrey,Bajío,Eje 2 Pte. Monterrey,Roma Sur,CUAUHTEMOC,19.404268,-99.160503,3G,21
+ECOBICI,166,Progreso - Cda. Antonio Maceo,Progreso,Cda. Antonio Maceo,Escandón,MIGUEL HIDALGO,19.406069,-99.183549,3G,24
+ECOBICI,167,General Salvador Alvarado - Progreso,General Salvador Alvarado,Progreso,Escandón,MIGUEL HIDALGO,19.404651,-99.179375,3G,24
+ECOBICI,168,Comercio - Progreso,Comercio,Progreso,Escandón,MIGUEL HIDALGO,19.403997,-99.1776,4G,21
+ECOBICI,169,Prosperidad - Progreso,Prosperidad,Progreso,Escandón,MIGUEL HIDALGO,19.403019,-99.174934,3G,21
+ECOBICI,170,Observatorio Oriente - Revolución,Observatorio Oriente,Revolución,Escandón,MIGUEL HIDALGO,19.404029,-99.184342,3G,21
+ECOBICI,171,Comercio - José Martí,Comercio,José Martí,Escandón,MIGUEL HIDALGO,19.4025195,-99.1781595,3G,27
+ECOBICI,172,General Francisco Murguía - José Martí,General Francisco Murguía,José Martí,Escandón,MIGUEL HIDALGO,19.4034757,-99.1817166,3G,18
+ECOBICI,173,Minería - José Martí,Minería,José Martí,Escandón,MIGUEL HIDALGO,19.401682,-99.176398,3G,21
+ECOBICI,174,Joaquín García Icazbalceta - Ignacio Manuel Altamirano,Joaquín García Icazbalceta,Ignacio Manuel Altamirano,San Rafael,CUAUHTEMOC,19.441114,-99.161636,4G,33
+ECOBICI,175,Mutualismo - José Martí,Mutualismo,José Martí,Escandón,MIGUEL HIDALGO,19.400767,-99.172533,Multimedial,24
+ECOBICI,176,Av. Jesús García - Luis Donaldo Colosio,Av. Jesús García,Luis Donaldo Colosio,Buenavista,CUAUHTEMOC,19.442717,-99.152262,3G,36
+ECOBICI,177,Benjamín Hill - Carlos Zetina,Benjamín Hill,Carlos Zetina,Hipódromo Condesa,CUAUHTEMOC,19.408841,-99.181692,3G,21
+ECOBICI,178,Tamaulipas - Francisco Murguía,Tamaulipas,Francisco Murguía,Hipódromo Condesa,CUAUHTEMOC,19.406833,-99.180457,4G,30
+ECOBICI,179,Nuevo León - Quintana Roo,Nuevo León,Quintana Roo,Hipódromo,CUAUHTEMOC,19.404452,-99.171438,3G,27
+ECOBICI,180,Quintana Roo - Villahermosa,Quintana Roo,Villahermosa,Hipódromo,CUAUHTEMOC,19.404554,-99.169953,3G,30
+ECOBICI,181,Benjamín Franklin - Ometusco,Benjamín Franklin,Ometusco,Hipódromo,CUAUHTEMOC,19.404733,-99.174461,3G,24
+ECOBICI,182,Progreso - Astrónomos,Progreso,Astrónomos,Escandón,MIGUEL HIDALGO,19.40198,-99.17132,4G,36
+ECOBICI,183,Gabino Barreda - Guillermo Prieto,Gabino Barreda,Guillermo Prieto,San Rafael,CUAUHTEMOC,19.437665,-99.164018,3G,36
+ECOBICI,184,General Gómez Pedraza - Gobernador Tiburcio Montiel,General Gómez Pedraza,Gobernador Tiburcio Montiel,San Miguel Chapultepec,MIGUEL HIDALGO,19.414793,-99.185083,4G,36
+ECOBICI,185,General Antonio León - General Pedro Antonio de los Santos,General Antonio León,General Pedro Antonio de los Santos,San Miguel Chapultepec,MIGUEL HIDALGO,19.412776,-99.182805,3G,30
+ECOBICI,186,Gob. Gregorio V. Gelati - Gral. Francisco Molinos del Campo,Gob. Gregorio V. Gelati,Gral. Francisco Molinos del Campo,San Miguel Chapultepec,MIGUEL HIDALGO,19.412455,-99.188489,3G,18
+ECOBICI,187,General Cano - Gobernador Gregorio V. Gelati,General Cano,Gobernador Gregorio V. Gelati,San Miguel Chapultepec,MIGUEL HIDALGO,19.411227,-99.185514,3G,21
+ECOBICI,188,Gobernador Melchor Múzquiz - Gobernador Ignacio Esteva,Gobernador Melchor Múzquiz,Gobernador Ignacio Esteva,San Miguel Chapultepec,MIGUEL HIDALGO,19.411711,-99.190139,4G,15
+ECOBICI,189,Gobernador Rafael Rebollar - Gobernador José Ceballos,Gobernador Rafael Rebollar,Gobernador José Ceballos,San Miguel Chapultepec,MIGUEL HIDALGO,19.410036,-99.187978,3G,18
+ECOBICI,190,Gobernador Ignacio Esteva - Maestro José Vasconcelos,Gobernador Ignacio Esteva,Maestro José Vasconcelos,San Miguel Chapultepec,MIGUEL HIDALGO,19.409577,-99.183818,Multimedial,24
+ECOBICI,191,Gobernador Rafael Rebollar - Gobernado Vicente Eguía,Gobernador Rafael Rebollar,Gobernado Vicente Eguía,San Miguel Chapultepec,MIGUEL HIDALGO,19.40796,-99.187901,3G,21
+ECOBICI,192,Rubén Darío - Reforma,Rubén Darío,Reforma,Bosque de Chapultepec,MIGUEL HIDALGO,19.42592,-99.190755,4G,36
+ECOBICI,193,Rubén Darío - Reforma,Rubén Darío,Reforma,Bosque de Chapultepec,MIGUEL HIDALGO,19.425907,-99.190733,3G,36
+ECOBICI,194,Circuito Mahatma Gandhi - Reforma,Circuito Mahatma Gandhi,Reforma,Bosque de Chapultepec,MIGUEL HIDALGO,19.424282,-99.180334,4G,24
+ECOBICI,195,Reforma - Mahatma Gandhi,Reforma,Mahatma Gandhi,Bosque de Chapultepec,MIGUEL HIDALGO,19.424858,-99.185181,4G,24
+ECOBICI,196,Lago Tanganica - Ejército Nacional,Lago Tanganica,Ejército Nacional,Granada,MIGUEL HIDALGO,19.438349,-99.192904,3G,27
+ECOBICI,197,Miguel de Cervantes Saavedra - Ferrocarril de Cuernavaca,Miguel de Cervantes Saavedra,Ferrocarril de Cuernavaca,Granada,MIGUEL HIDALGO,19.440077,-99.204316,4G,36
+ECOBICI,198,Sócrates - Ejército Nacional,Sócrates,Ejército Nacional,Polanco,MIGUEL HIDALGO,19.438168,-99.203888,4G,27
+ECOBICI,199,Anatole France - Ejército Nacional,Anatole France,Ejército Nacional,Polanco,MIGUEL HIDALGO,19.437934,-99.197241,3G,24
+ECOBICI,200,Emerson - Ejército Nacional,Emerson,Ejército Nacional,Polanco,MIGUEL HIDALGO,19.437596,-99.188785,3G,27
+ECOBICI,201,Lope de Vega - Ejército Nacional,Lope de Vega,Ejército Nacional,Polanco,MIGUEL HIDALGO,19.437431,-99.187215,3G,18
+ECOBICI,202,Calderón de la Barca - Homero,Calderón de la Barca,Homero,Polanco,MIGUEL HIDALGO,19.436064,-99.198898,3G,21
+ECOBICI,203,Tennyson - Homero,Tennyson,Homero,Polanco,MIGUEL HIDALGO,19.435985,-99.194832,3G,24
+ECOBICI,204,Temístocles - Homero,Temístocles,Homero,Polanco,MIGUEL HIDALGO,19.435882,-99.19152,3G,27
+ECOBICI,205,Taine - Homero,Taine,Homero,Polanco,MIGUEL HIDALGO,19.435525,-99.184713,3G,21
+ECOBICI,206,Moliere - Homero,Moliere,Homero,Polanco,MIGUEL HIDALGO,19.435798,-99.201419,4G,24
+ECOBICI,207,Torquato Tasso - Homero,Torquato Tasso,Homero,Polanco,MIGUEL HIDALGO,19.434861,-99.183322,3G,24
+ECOBICI,208,Hesíodo - Lamartine,Hesíodo,Lamartine,Polanco,MIGUEL HIDALGO,19.434182,-99.189835,3G,27
+ECOBICI,209,Solón - Horacio,Solón,Horacio,Polanco,MIGUEL HIDALGO,19.435478,-99.206359,3G,24
+ECOBICI,210,Eugenio Sue - Horacio,Eugenio Sue,Horacio,Polanco,MIGUEL HIDALGO,19.434076,-99.194091,3G,27
+ECOBICI,211,Isaac Newton - Horacio,Isaac Newton,Horacio,Polanco,MIGUEL HIDALGO,19.433607,-99.188528,3G,36
+ECOBICI,212,Hegel - Horacio,Hegel,Horacio,Polanco,MIGUEL HIDALGO,19.433567,-99.188096,4G,36
+ECOBICI,213,Solón - Cicerón,Solón,Cicerón,Polanco,MIGUEL HIDALGO,19.434361,-99.206342,3G,27
+ECOBICI,214,Platón - Horacio,Platón,Horacio,Polanco,MIGUEL HIDALGO,19.434353,-99.20322,3G,24
+ECOBICI,215,Edgar Alan Poe - Horacio,Edgar Alan Poe,Horacio,Polanco,MIGUEL HIDALGO,19.43384,-99.19968,3G,24
+ECOBICI,216,Alejandro Dumas - Horacio,Alejandro Dumas,Horacio,Polanco,MIGUEL HIDALGO,19.433419,-99.195746,4G,24
+ECOBICI,217,Euler - Av. Horacio,Euler,Av. Horacio,Polanco,MIGUEL HIDALGO,19.432888,-99.183605,4G,36
+ECOBICI,218,Hegel - Ibarbourou,Hegel,Ibarbourou,Polanco,MIGUEL HIDALGO,19.432451,-99.188033,3G,24
+ECOBICI,219,Esopo - Ferrocarril de Cuernavaca,Esopo,Ferrocarril de Cuernavaca,Polanco,MIGUEL HIDALGO,19.433542,-99.207808,3G,36
+ECOBICI,220,Plinio - Presidente Masaryk,Plinio,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.432655,-99.205727,3G,24
+ECOBICI,221,Emilio Castelar - Presidente Masaryk,Emilio Castelar,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431799,-99.201565,4G,24
+ECOBICI,222,Alejandro Dumas - Presidente Masaryk,Alejandro Dumas,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431417,-99.195774,Multimedial,24
+ECOBICI,223,Isaac Newton - Presidente Masaryk,Isaac Newton,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431242,-99.191613,4G,30
+ECOBICI,224,Hegel - Presidente Masaryk,Hegel,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431255,-99.188065,3G,21
+ECOBICI,225,Petrarca - Presidente Masaryk,Petrarca,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431172,-99.185612,3G,24
+ECOBICI,226,Wallon - Presidente Masaryk,Wallon,Presidente Masaryk,Polanco,MIGUEL HIDALGO,19.431033,-99.18222,3G,27
+ECOBICI,227,Campos Elíseos - Periférico,Campos Elíseos,Periférico,Polanco,MIGUEL HIDALGO,19.431791,-99.207373,3G,24
+ECOBICI,228,Campos Elíseos - La Fontaine,Campos Elíseos,La Fontaine,Polanco,MIGUEL HIDALGO,19.427705,-99.19912,4G,21
+ECOBICI,229,Carlos Dickens - Séneca,Carlos Dickens,Séneca,Polanco,MIGUEL HIDALGO,19.430515,-99.203331,3G,21
+ECOBICI,230,Edgar Allan Poe - Carlos Dickens,Edgar Allan Poe,Carlos Dickens,Polanco,MIGUEL HIDALGO,19.430098,-99.200074,3G,18
+ECOBICI,231,Isaac Newton - Aristóteles,Isaac Newton,Aristóteles,Polanco,MIGUEL HIDALGO,19.42977,-99.19349,3G,27
+ECOBICI,232,Taine - Rubén Darío,Taine,Rubén Darío,Polanco,MIGUEL HIDALGO,19.42894,-99.185389,3G,30
+ECOBICI,233,Julio Verne - Luis G. Urbina,Julio Verne,Luis G. Urbina,Polanco,MIGUEL HIDALGO,19.429314,-99.196965,4G,15
+ECOBICI,234,Tres Picos - Arquímedes,Tres Picos,Arquímedes,Polanco,MIGUEL HIDALGO,19.42783,-99.191539,3G,27
+ECOBICI,235,Campos Elíseos - Moliere,Campos Elíseos,Moliere,Polanco,MIGUEL HIDALGO,19.429332,-99.202181,3G,27
+ECOBICI,236,Campos Elíseos - Moliere,Campos Elíseos,Moliere,Polanco,MIGUEL HIDALGO,19.429436,-99.20243,3G,30
+ECOBICI,237,Andrés Bello - George Eliot,Andrés Bello,George Eliot,Polanco,MIGUEL HIDALGO,19.426744,-99.193986,4G,30
+ECOBICI,238,Andrés Bello - George Eliot,Andrés Bello,George Eliot,Polanco,MIGUEL HIDALGO,19.426757,-99.193774,3G,30
+ECOBICI,239,Rincón del Bosque - Rubén Darío,Rincón del Bosque,Rubén Darío,Polanco,MIGUEL HIDALGO,19.430153,-99.181355,3G,21
+ECOBICI,240,Ejército Nacional - Ferrocarril de Cuernavaca,Ejército Nacional,Ferrocarril de Cuernavaca,Polanco,MIGUEL HIDALGO,19.438551,-99.206298,4G,36
+ECOBICI,241,Ejército Nacional - Juan Vázquez de la Mella,Ejército Nacional,Juan Vázquez de la Mella,Polanco,MIGUEL HIDALGO,19.438616,-99.207577,Multimedial,24
+ECOBICI,242,Miguel de Cervantes Saavedra - Pról. Moliere,Miguel de Cervantes Saavedra,Pról. Moliere,Granada,MIGUEL HIDALGO,19.440344,-99.20105,3G,30
+ECOBICI,243,Miguel de Cervantes Saavedra - Lago Filt,Miguel de Cervantes Saavedra,Lago Filt,Granada,MIGUEL HIDALGO,19.440806,-99.195806,3G,27
+ECOBICI,244,Miguel de Cervantes Saavedra - Lago Victoria,Miguel de Cervantes Saavedra,Lago Victoria,Granada,MIGUEL HIDALGO,19.440885,-99.193315,3G,18
+ECOBICI,245,Lago Onega - Ejército Nacional,Lago Onega,Ejército Nacional,Granada,MIGUEL HIDALGO,19.438347,-99.190503,3G,24
+ECOBICI,246,Leibnitz - Thiers,Leibnitz,Thiers,Anzures,MIGUEL HIDALGO,19.434147,-99.179835,3G,15
+ECOBICI,247,Herschel - Rousseau,Herschel,Rousseau,Anzures,MIGUEL HIDALGO,19.432276,-99.18064,Multimedial,24
+ECOBICI,248,Shakespeare - Lafayette,Shakespeare,Lafayette,Anzures,MIGUEL HIDALGO,19.43175,-99.177399,3G,27
+ECOBICI,249,Shakespeare - Darwin,Shakespeare,Darwin,Anzures,MIGUEL HIDALGO,19.429877,-99.177569,3G,18
+ECOBICI,250,Darwin - Mariano Escobedo,Darwin,Mariano Escobedo,Anzures,MIGUEL HIDALGO,19.428949,-99.179796,4G,27
+ECOBICI,251,Goethe - Darwin,Goethe,Darwin,Anzures,MIGUEL HIDALGO,19.429261,-99.17538,3G,18
+ECOBICI,252,Víctor Hugo - Shakespeare,Víctor Hugo,Shakespeare,Anzures,MIGUEL HIDALGO,19.427575,-99.17702,3G,18
+ECOBICI,253,Dante - Tolstoi,Dante,Tolstoi,Anzures,MIGUEL HIDALGO,19.4264486,-99.1781433,4G,21
+ECOBICI,254,Alfonso Herrera - Miguel Schultz,Alfonso Herrera,Miguel Schultz,San Rafael,CUAUHTEMOC,19.439347,-99.160074,3G,30
+ECOBICI,255,José Rosas Moreno - Guillermo Prieto,José Rosas Moreno,Guillermo Prieto,San Rafael,CUAUHTEMOC,19.437118,-99.161862,3G,36
+ECOBICI,256,Gómez Farías - Sadi Carnot,Gómez Farías,Sadi Carnot,San Rafael,CUAUHTEMOC,19.437167,-99.158313,3G,27
+ECOBICI,257,Manuel María Conteras - Villalongín,Manuel María Conteras,Villalongín,San Rafael,CUAUHTEMOC,19.433803,-99.166223,Multimedial,21
+ECOBICI,258,Circuito Interior - Juan Escutia,Circuito Interior,Juan Escutia,Condesa,CUAUHTEMOC,19.4165298,-99.1790435,3G,30
+ECOBICI,259,Tomás Alva Edison - Ponciano Arriaga,Tomás Alva Edison,Ponciano Arriaga,Tabacalera,CUAUHTEMOC,19.437569,-99.15468,3G,24
+ECOBICI,260,Juárez - Balderas,Juárez,Balderas,Centro,CUAUHTEMOC,19.4352787,-99.1477913,Multimedial,24
+ECOBICI,261,Reforma - Río de la Plata,Reforma,Río de la Plata,Cuauhtémoc,CUAUHTEMOC,19.42491,-99.172455,3G,30
+ECOBICI,262,República de Cuba - República de Brasil,República de Cuba,República de Brasil,Centro,CUAUHTEMOC,19.436931,-99.133952,4G,33
+ECOBICI,263,Sadi Carnot - Gómez Farías,Sadi Carnot,Gómez Farías,San Rafael,CUAUHTEMOC,19.436274,-99.158425,4G,30
+ECOBICI,264,Héroes Ferrocarrileros - Jesús García,Héroes Ferrocarrileros,Jesús García,Buenavista,CUAUHTEMOC,19.440985,-99.152935,3G,36
+ECOBICI,265,Mina - Jesús García,Mina,Jesús García,Buenavista,CUAUHTEMOC,19.440839,-99.152265,4G,36
+ECOBICI,266,Jesús García - Carlos J. Meneses,Jesús García,Carlos J. Meneses,Buenavista,CUAUHTEMOC,19.444031,-99.152187,4G,36
+ECOBICI,267,Jesús García - Carlos J. Meneses,Jesús García,Carlos J. Meneses,Buenavista,CUAUHTEMOC,19.443735,-99.152203,3G,36
+ECOBICI,268,Luis Donaldo Colosio - Jesús García,Luis Donaldo Colosio,Jesús García,Buenavista,CUAUHTEMOC,19.442467,-99.151658,3G,36
+ECOBICI,269,Luis Donaldo Colosio - Aldama,Luis Donaldo Colosio,Aldama,Buenavista,CUAUHTEMOC,19.442448,-99.151586,3G,36
+ECOBICI,270,De la República - Ponciano Arriaga,De la República,Ponciano Arriaga,Tabacalera,CUAUHTEMOC,19.436764,-99.153865,4G,36
+ECOBICI,271,Jesús García - Carlos J. Meneses,Jesús García,Carlos J. Meneses,Buenavista,CUAUHTEMOC,19.443684,-99.152465,3G,36
+ECOBICI,272,Jesús García - Carlos J. Meneses,Jesús García,Carlos J. Meneses,Buenavista,CUAUHTEMOC,19.443467,-99.152491,3G,36
+ECOBICI,273,Luis Donaldo Colosio - Jesús García,Luis Donaldo Colosio,Jesús García,Buenavista,CUAUHTEMOC,19.442707,-99.152956,3G,36
+ECOBICI,274,Luis Donaldo Colosio - Insurgentes Norte,Luis Donaldo Colosio,Insurgentes Norte,Buenavista,CUAUHTEMOC,19.442772,-99.153289,3G,36
+ECOBICI,275,Héroes Ferrocarrileros - Jesús García,Héroes Ferrocarrileros,Jesús García,Buenavista,CUAUHTEMOC,19.441061,-99.153137,3G,36
+ECOBICI,276,Anaxágoras - Obrero Mundial,Anaxágoras,Obrero Mundial,Narvarte Poniente,BENITO JUAREZ,19.401986,-99.156366,3G,30
+ECOBICI,277,Prolongación Tonalá - Obrero Mundial,Prolongación Tonalá,Obrero Mundial,Narvarte Poniente,BENITO JUAREZ,19.401807,-99.15909,3G,27
+ECOBICI,278,Mier y Pesado - Obrero Mundial,Mier y Pesado,Obrero Mundial,Del Valle Norte,BENITO JUAREZ,19.40071,-99.163831,3G,21
+ECOBICI,279,La Morena - Providencia,La Morena,Providencia,Del Valle Norte,BENITO JUAREZ,19.399908,-99.166553,3G,30
+ECOBICI,280,Anaxágoras - Obrero Mundial,Anaxágoras,Obrero Mundial,Narvarte Poniente,BENITO JUAREZ,19.4015,-99.156406,4G,36
+ECOBICI,281,Pitágoras - La Morena,Pitágoras,La Morena,Narvarte Poniente,BENITO JUAREZ,19.398532,-99.157308,3G,30
+ECOBICI,282,La Morena - Eje 2 Poniente Gabriel Mancera,La Morena,Eje 2 Poniente Gabriel Mancera,Del Valle Norte,BENITO JUAREZ,19.398692,-99.161273,3G,18
+ECOBICI,283,Av. Coyoacán - Rafael Dondé,Av. Coyoacán,Rafael Dondé,Del Valle Norte,BENITO JUAREZ,19.39827,-99.167383,3G,21
+ECOBICI,284,Dakota - Vermont,Dakota,Vermont,Nápoles,BENITO JUAREZ,19.397693,-99.172981,3G,33
+ECOBICI,285,12 de Octubre - Minería,12 de Octubre,Minería,Escandón,MIGUEL HIDALGO,19.399763,-99.177538,3G,18
+ECOBICI,286,13 de Septiembre - Avenida Patriotismo,13 de Septiembre,Avenida Patriotismo,Escandón,MIGUEL HIDALGO,19.399201,-99.179943,3G,21
+ECOBICI,287,13 de Septiembre - Puente de la Morena,13 de Septiembre,Puente de la Morena,Escandón,MIGUEL HIDALGO,19.398946,-99.183254,3G,21
+ECOBICI,288,11 de Abril - Avenida 2,11 de Abril,Avenida 2,San Pedro de los Pinos,BENITO JUAREZ,19.396359,-99.183579,3G,18
+ECOBICI,289,Chicago - Yosemite,Chicago,Yosemite,Nápoles,BENITO JUAREZ,19.397308,-99.174548,3G,18
+ECOBICI,290,Yosemite - Colorado,Yosemite,Colorado,Nápoles,BENITO JUAREZ,19.396333,-99.172667,3G,27
+ECOBICI,291,Magdalena - División del Norte,Magdalena,División del Norte,Del Valle Norte,BENITO JUAREZ,19.397651,-99.169946,3G,27
+ECOBICI,292,Adolfo Prieto - Eje 4 Sur Xola,Adolfo Prieto,Eje 4 Sur Xola,Del Valle Norte,BENITO JUAREZ,19.396917,-99.166264,3G,36
+ECOBICI,293,Mier y Pesado - Eje 4 Sur Xola,Mier y Pesado,Eje 4 Sur Xola,Del Valle Norte,BENITO JUAREZ,19.397373,-99.164598,4G,36
+ECOBICI,294,Nicolás San Juan - Eje 4 Sur Xola,Nicolás San Juan,Eje 4 Sur Xola,Narvarte Poniente,BENITO JUAREZ,19.396513,-99.160924,3G,24
+ECOBICI,295,Anaxágoras - Eje 4 Sur Xola,Anaxágoras,Eje 4 Sur Xola,Narvarte Poniente,BENITO JUAREZ,19.396328,-99.156871,4G,36
+ECOBICI,296,Diagonal San Antonio - Enrique Rébsamen,Diagonal San Antonio,Enrique Rébsamen,Narvarte Poniente,BENITO JUAREZ,19.394283,-99.158756,Multimedial,21
+ECOBICI,297,Diagonal San Antonio - Enrique Rébsamen,Diagonal San Antonio,Enrique Rébsamen,Narvarte Poniente,BENITO JUAREZ,19.394412,-99.158907,3G,33
+ECOBICI,298,Romero de Terreros - Gabriel Mancera,Romero de Terreros,Gabriel Mancera,Del Valle Norte,BENITO JUAREZ,19.394092,-99.162139,3G,21
+ECOBICI,299,Romero de Terreros - Mier y Pesado,Romero de Terreros,Mier y Pesado,Del Valle Norte,BENITO JUAREZ,19.394601,-99.165054,3G,24
+ECOBICI,300,Providencia - Luz Saviñón,Providencia,Luz Saviñón,Del Valle Norte,BENITO JUAREZ,19.3932287,-99.1684308,Multimedial,21
+ECOBICI,301,Luz Saviñón - Magdalena,Luz Saviñón,Magdalena,Del Valle Norte,BENITO JUAREZ,19.393807,-99.171133,3G,24
+ECOBICI,302,Luz Saviñón - Magdalena,Luz Saviñón,Magdalena,Del Valle Norte,BENITO JUAREZ,19.393832,-99.171466,3G,36
+ECOBICI,303,Montecito - Av. Insurgentes,Montecito,Av. Insurgentes,Nápoles,BENITO JUAREZ,19.394842,-99.173025,4G,27
+ECOBICI,304,Montecito - Dakota,Montecito,Dakota,Nápoles,BENITO JUAREZ,19.395043,-99.173821,3G,33
+ECOBICI,305,Avenida del Parque - Arizona,Avenida del Parque,Arizona,Nápoles,BENITO JUAREZ,19.394693,-99.175531,4G,36
+ECOBICI,306,Dakota - Filadelfia,Dakota,Filadelfia,Nápoles,BENITO JUAREZ,19.393699,-99.175664,4G,36
+ECOBICI,307,Minnesota - Dakota,Minnesota,Dakota,Nápoles,BENITO JUAREZ,19.393701,-99.175834,3G,27
+ECOBICI,308,Nueva York - Arizona,Nueva York,Arizona,Nápoles,BENITO JUAREZ,19.393643,-99.178156,3G,30
+ECOBICI,309,Pensilvania - Arizona,Pensilvania,Arizona,Nápoles,BENITO JUAREZ,19.393059,-99.179483,3G,27
+ECOBICI,310,Calle 1 - Patriotismo,Calle 1,Patriotismo,San Pedro de los Pinos,BENITO JUAREZ,19.395322,-99.181667,3G,15
+ECOBICI,311,Calle 5 - Avenida Revolución,Calle 5,Avenida Revolución,San Pedro de los Pinos,BENITO JUAREZ,19.393665,-99.185391,3G,18
+ECOBICI,312,Avenida 2 - Calle 7,Avenida 2,Calle 7,San Pedro de los Pinos,BENITO JUAREZ,19.392634,-99.183737,4G,27
+ECOBICI,313,Pensilvania - Oklahoma,Pensilvania,Oklahoma,Nápoles,BENITO JUAREZ,19.391431,-99.178989,3G,24
+ECOBICI,314,Nueva York - Louisiana,Nueva York,Louisiana,Nápoles,BENITO JUAREZ,19.391647,-99.177331,3G,21
+ECOBICI,315,Alabama - Montana,Alabama,Montana,Nápoles,BENITO JUAREZ,19.391472,-99.1736,3G,21
+ECOBICI,316,San Francisco - Concepción Beistegui,San Francisco,Concepción Beistegui,Del Valle Norte,BENITO JUAREZ,19.391056,-99.1712,3G,27
+ECOBICI,317,Avenida Coyoacán - Torres Adalid,Avenida Coyoacán,Torres Adalid,Del Valle Norte,BENITO JUAREZ,19.391456,-99.166157,4G,36
+ECOBICI,318,Luz Saviñón - Amores,Luz Saviñón,Amores,Del Valle Norte,BENITO JUAREZ,19.392195,-99.163987,3G,21
+ECOBICI,319,Diagonal San Antonio - Luz Saviñón,Diagonal San Antonio,Luz Saviñón,Del Valle Norte,BENITO JUAREZ,19.391991,-99.162684,3G,27
+ECOBICI,320,Enrique Rébsamen - Luz Saviñón,Enrique Rébsamen,Luz Saviñón,Narvarte Poniente,BENITO JUAREZ,19.391323,-99.15936,3G,18
+ECOBICI,321,Torres Adalid - Anaxágoras,Torres Adalid,Anaxágoras,Narvarte Poniente,BENITO JUAREZ,19.389477,-99.157513,3G,24
+ECOBICI,322,Heriberto Frías - Concepción Beistegui,Heriberto Frías,Concepción Beistegui,Narvarte Poniente,BENITO JUAREZ,19.388528,-99.160616,3G,27
+ECOBICI,323,Concepción Beistegui - Gabriel Mancera,Concepción Beistegui,Gabriel Mancera,Del Valle Norte,BENITO JUAREZ,19.389026,-99.163403,3G,24
+ECOBICI,324,Amores - Avenida Eugenia,Amores,Avenida Eugenia,Del Valle Centro,BENITO JUAREZ,19.387342,-99.165629,3G,18
+ECOBICI,325,Providencia - Avenida Del Valle,Providencia,Avenida Del Valle,Del Valle Centro,BENITO JUAREZ,19.388178,-99.169689,3G,24
+ECOBICI,326,Eugenia - Nebraska,Eugenia,Nebraska,Ampliación Nápoles,BENITO JUAREZ,19.388978,-99.174811,3G,36
+ECOBICI,327,Georgia - Pensilvania,Georgia,Pensilvania,Nápoles,BENITO JUAREZ,19.38885,-99.17772,Multimedial,24
+ECOBICI,328,Avenida 1 - Calle 7,Avenida 1,Calle 7,San Pedro de los Pinos,BENITO JUAREZ,19.392721,-99.184727,3G,27
+ECOBICI,329,Calle 13 - Avenida 1,Calle 13,Avenida 1,San Pedro de los Pinos,BENITO JUAREZ,19.390306,-99.184812,3G,24
+ECOBICI,330,Calle 15 - Avenida Patriotismo,Calle 15,Avenida Patriotismo,San Pedro de los Pinos,BENITO JUAREZ,19.389358,-99.182606,3G,18
+ECOBICI,331,Avenida 2 - Calle 17,Avenida 2,Calle 17,San Pedro de los Pinos,BENITO JUAREZ,19.388748,-99.183924,3G,27
+ECOBICI,332,Calle 27 - Avenida 3,Calle 27,Avenida 3,San Pedro de los Pinos,BENITO JUAREZ,19.385494,-99.183744,3G,24
+ECOBICI,333,Georgia - Carolina,Georgia,Carolina,Ampliación Nápoles,BENITO JUAREZ,19.387624,-99.180978,3G,21
+ECOBICI,334,Nueva York - Insurgentes,Nueva York,Insurgentes,Ampliación Nápoles,BENITO JUAREZ,19.3865269,-99.1751519,3G,36
+ECOBICI,335,Magdalena - Ameyalco,Magdalena,Ameyalco,Del Valle Centro,BENITO JUAREZ,19.387003,-99.173504,3G,33
+ECOBICI,336,San Borja - Cda. Dr. J. Bartolache,San Borja,Cda. Dr. J. Bartolache,Del Valle Centro,BENITO JUAREZ,19.385531,-99.169673,3G,21
+ECOBICI,337,San Borja - Martín Mendalde,San Borja,Martín Mendalde,Del Valle Centro,BENITO JUAREZ,19.384849,-99.16704,4G,21
+ECOBICI,338,Nicolás San Juan - San Borja,Nicolás San Juan,San Borja,Del Valle Centro,BENITO JUAREZ,19.384242,-99.16326,3G,21
+ECOBICI,339,Enrique Rébsamen - Avenida Eugenia,Enrique Rébsamen,Avenida Eugenia,Narvarte Poniente,BENITO JUAREZ,19.386212,-99.160583,3G,21
+ECOBICI,340,Anaxágoras - Avenida Eugenia,Anaxágoras,Avenida Eugenia,Narvarte Poniente,BENITO JUAREZ,19.3856299,-99.1582241,4G,30
+ECOBICI,341,San Borja - Avenida Cuauhtémoc,San Borja,Avenida Cuauhtémoc,Narvarte Poniente,BENITO JUAREZ,19.382889,-99.158352,3G,30
+ECOBICI,342,Anaxágoras - Ángel Urraza Eje 6 Sur,Anaxágoras,Ángel Urraza Eje 6 Sur,Narvarte Poniente,BENITO JUAREZ,19.381052,-99.159453,3G,30
+ECOBICI,343,Enrique Rébsamen - División del Norte,Enrique Rébsamen,División del Norte,Del valle Centro,BENITO JUAREZ,19.383904,-99.160875,3G,18
+ECOBICI,344,Heriberto Frías - Ángel Urraza Eje 6 Sur,Heriberto Frías,Ángel Urraza Eje 6 Sur,Del valle Centro,BENITO JUAREZ,19.382222,-99.162214,3G,27
+ECOBICI,345,Patricio Sanz - Miraflores,Patricio Sanz,Miraflores,Insurgentes San Borja,BENITO JUAREZ,19.384447,-99.172039,3G,21
+ECOBICI,346,San Francisco - Santa Margarita,San Francisco,Santa Margarita,Insurgentes San Borja,BENITO JUAREZ,19.385039,-99.174018,3G,24
+ECOBICI,347,Pensilvania - Maximino Ávila Camacho,Pensilvania,Maximino Ávila Camacho,Ciudad de los Deportes,BENITO JUAREZ,19.384474,-99.176084,4G,27
+ECOBICI,348,Indiana - Avenida San Antonio,Indiana,Avenida San Antonio,Ciudad de los Deportes,BENITO JUAREZ,19.38542,-99.17823,3G,18
+ECOBICI,349,Augusto Rodin - Avenida San Antonio,Augusto Rodin,Avenida San Antonio,Ampliación Nápoles,BENITO JUAREZ,19.385632,-99.180848,3G,21
+ECOBICI,350,José Clemente Orozco - Correggio,José Clemente Orozco,Correggio,Ciudad de los Deportes,BENITO JUAREZ,19.384066,-99.181221,3G,30
+ECOBICI,351,Calle 27 - Avenida Revolución,Calle 27,Avenida Revolución,San Pedro de los Pinos,BENITO JUAREZ,19.385751,-99.186297,3G,18
+ECOBICI,352,Tintoreto - Giorgione,Tintoreto,Giorgione,Nonoalco,BENITO JUAREZ,19.384146,-99.185491,4G,30
+ECOBICI,353,Carolina - Holbein,Carolina,Holbein,Ciudad de los Deportes,BENITO JUAREZ,19.38213,-99.178814,4G,27
+ECOBICI,354,Boston - Avenida Insurgentes,Boston,Avenida Insurgentes,Noche Buena,BENITO JUAREZ,19.381714,-99.176664,3G,24
+ECOBICI,355,California - Sacramento,California,Sacramento,Insurgentes San Borja,BENITO JUAREZ,19.382042,-99.173336,3G,21
+ECOBICI,356,Matías Romero - Adolfo Prieto,Matías Romero,Adolfo Prieto,Del Valle Centro,BENITO JUAREZ,19.381287,-99.1702,3G,18
+ECOBICI,357,Matías Romero - Amores,Matías Romero,Amores,Del Valle Centro,BENITO JUAREZ,19.380617,-99.167066,3G,24
+ECOBICI,358,Nicolás San Juan - Matías Romero,Nicolás San Juan,Matías Romero,Del Valle Centro,BENITO JUAREZ,19.380087,-99.16427,3G,24
+ECOBICI,359,Matías Romero - Pestalozzi,Matías Romero,Pestalozzi,Del Valle Centro,BENITO JUAREZ,19.379331,-99.161163,4G,33
+ECOBICI,360,Heriberto Frías - Matías Romero,Heriberto Frías,Matías Romero,Del Valle Centro,BENITO JUAREZ,19.379435,-99.162794,Multimedial,21
+ECOBICI,361,Porfirio Díaz - Capulín,Porfirio Díaz,Capulín,Del Valle Centro,BENITO JUAREZ,19.380691,-99.175036,3G,27
+ECOBICI,362,Augusto Rodin - Alberto Balderas,Augusto Rodin,Alberto Balderas,Ciudad de los Deportes,BENITO JUAREZ,19.382109,-99.181056,3G,21
+ECOBICI,363,Holbein - Paulo Ucello,Holbein,Paulo Ucello,Ciudad de los Deportes,BENITO JUAREZ,19.380839,-99.183932,3G,21
+ECOBICI,364,Botticelli - Cda. de Giorgione,Botticelli,Cda. de Giorgione,Nonoalco,BENITO JUAREZ,19.383019,-99.185669,3G,27
+ECOBICI,365,Holbein - Avenida Revolución,Holbein,Avenida Revolución,Nonoalco,BENITO JUAREZ,19.381123,-99.18667,3G,30
+ECOBICI,366,Porfirio Díaz - Augusto Rodin,Porfirio Díaz,Augusto Rodin,Extremadura Insurgentes,BENITO JUAREZ,19.378423,-99.181891,3G,24
+ECOBICI,367,Boston - Augusto Rodin,Boston,Augusto Rodin,Noche Buena,BENITO JUAREZ,19.379593,-99.181351,3G,21
+ECOBICI,368,Porfirio Díaz - Cincinatti y Baltimore,Porfirio Díaz,Cincinatti y Baltimore,Extremadura Insurgentes,BENITO JUAREZ,19.379289,-99.179125,3G,24
+ECOBICI,369,Porfirio Díaz - Avenida Insurgentes,Porfirio Díaz,Avenida Insurgentes,Extremadura Insurgentes,BENITO JUAREZ,19.379941,-99.177224,4G,36
+ECOBICI,370,Tlacoquemécatl - Insurgentes,Tlacoquemécatl,Insurgentes,Tlacoquemécatl del Valle,BENITO JUAREZ,19.378827,-99.176944,3G,30
+ECOBICI,370,Tlacoquemécatl - Capulín,Tlacoquemécatl,Capulín,Tlacoquemécatl del Valle,BENITO JUAREZ,19.378546,-99.174297,3G,21
+ECOBICI,372,Dr. Roberto Gayol - Tlacoquemécatl,Dr. Roberto Gayol,Tlacoquemécatl,Del Valle Sur,BENITO JUAREZ,19.377966,-99.170272,4G,21
+ECOBICI,373,Pilares - Gabriel Mancera,Pilares,Gabriel Mancera,Del valle Centro,BENITO JUAREZ,19.377932,-99.166594,3G,18
+ECOBICI,374,Pitágoras - Pilares,Pitágoras,Pilares,Del valle Centro,BENITO JUAREZ,19.376918,-99.16108,4G,30
+ECOBICI,375,Tenayuca - División del Norte,Tenayuca,División del Norte,Letrán Valle,BENITO JUAREZ,19.376997,-99.158779,3G,24
+ECOBICI,376,Pitágoras - Avenida Universidad,Pitágoras,Avenida Universidad,Letrán Valle,BENITO JUAREZ,19.375332,-99.161607,3G,27
+ECOBICI,377,Heriberto Frías - Miguel Laurent,Heriberto Frías,Miguel Laurent,Del Valle Sur,BENITO JUAREZ,19.375397,-99.163778,3G,36
+ECOBICI,378,Miguel Laurent - Amores,Miguel Laurent,Amores,Del Valle Sur,BENITO JUAREZ,19.375865,-99.168219,3G,30
+ECOBICI,379,Dr. Roberto Gayol - Miguel Laurent,Dr. Roberto Gayol,Miguel Laurent,Del Valle Sur,BENITO JUAREZ,19.375951,-99.170776,3G,36
+ECOBICI,380,Moras - San Lorenzo,Moras,San Lorenzo,Tlacoquemécatl del Valle,BENITO JUAREZ,19.374756,-99.173539,3G,27
+ECOBICI,381,San Lorenzo - Manzanas,San Lorenzo,Manzanas,Tlacoquemécatl del Valle,BENITO JUAREZ,19.375495,-99.177819,3G,27
+ECOBICI,382,San Lorenzo - Insurgentes,San Lorenzo,Insurgentes,Tlacoquemécatl del Valle,BENITO JUAREZ,19.375531,-99.178051,3G,24
+ECOBICI,383,Luis Carracci - 2da. cda. de Luis Carracci,Luis Carracci,2da. cda. de Luis Carracci,Extremadura Insurgentes,BENITO JUAREZ,19.375743,-99.181512,3G,15
+ECOBICI,384,Empresa - Poussin,Empresa,Poussin,Insurgentes Mixcoac,BENITO JUAREZ,19.375865,-99.185573,3G,21
+ECOBICI,385,Poussin - Empresa,Poussin,Empresa,Insurgentes Mixcoac,BENITO JUAREZ,19.375806,-99.185527,4G,36
+ECOBICI,386,Poussin - Donatello,Poussin,Donatello,Insurgentes Mixcoac,BENITO JUAREZ,19.374912,-99.185807,3G,36
+ECOBICI,387,Cádiz - Empresa,Cádiz,Empresa,Insurgentes Mixcoac,BENITO JUAREZ,19.374267,-99.180546,3G,18
+ECOBICI,388,Valencia - Málaga,Valencia,Málaga,Insurgentes Mixcoac,BENITO JUAREZ,19.373078,-99.181416,3G,21
+ECOBICI,389,Santander - Félix Cuevas,Santander,Félix Cuevas,Insurgentes Mixcoac,BENITO JUAREZ,19.373438,-99.179531,3G,36
+ECOBICI,390,Oso - Félix Cuevas,Oso,Félix Cuevas,Actipan,BENITO JUAREZ,19.373384,-99.178173,4G,36
+ECOBICI,391,Oso - Félix Cuevas,Oso,Félix Cuevas,Actipan,BENITO JUAREZ,19.373161,-99.178243,Multimedial,21
+ECOBICI,392,Patricio Sanz - Félix Cuevas,Patricio Sanz,Félix Cuevas,Tlacoquemécatl del Valle,BENITO JUAREZ,19.373004,-99.174764,3G,21
+ECOBICI,393,Adolfo Prieto - Félix Cuevas,Adolfo Prieto,Félix Cuevas,Tlacoquemécatl del Valle,BENITO JUAREZ,19.373307,-99.172471,4G,36
+ECOBICI,394,Dr. Roberto Gayol - Félix Cuevas,Dr. Roberto Gayol,Félix Cuevas,Del Valle Sur,BENITO JUAREZ,19.372474,-99.171639,3G,36
+ECOBICI,395,San Lorenzo - Martín Mendalde,San Lorenzo,Martín Mendalde,Del Valle Sur,BENITO JUAREZ,19.373725,-99.169807,3G,30
+ECOBICI,396,Martín Mendalde - Félix Cuevas,Martín Mendalde,Félix Cuevas,Del Valle Sur,BENITO JUAREZ,19.37165,-99.17015,3G,21
+ECOBICI,397,San Lorenzo - Gabriel Mancera,San Lorenzo,Gabriel Mancera,Del Valle Sur,BENITO JUAREZ,19.373112,-99.166981,3G,30
+ECOBICI,398,Juan Sánchez Azcona - Félix Cuevas,Juan Sánchez Azcona,Félix Cuevas,Del Valle Sur,BENITO JUAREZ,19.37104,-99.165653,3G,27
+ECOBICI,399,Heriberto Frías - San Lorenzo,Heriberto Frías,San Lorenzo,Del Valle Sur,BENITO JUAREZ,19.372469,-99.164538,3G,36
+ECOBICI,400,San Lorenzo - Heriberto Frías,San Lorenzo,Heriberto Frías,Del Valle Sur,BENITO JUAREZ,19.372591,-99.164166,3G,30
+ECOBICI,401,San Lorenzo - Avenida Cuauhtémoc,San Lorenzo,Avenida Cuauhtémoc,Santa Cruz Atoyac,BENITO JUAREZ,19.372101,-99.161501,3G,33
+ECOBICI,402,Uxmal - Municipio Libre,Uxmal,Municipio Libre,Santa Cruz Atoyac,BENITO JUAREZ,19.370957,-99.158886,3G,30
+ECOBICI,403,Uxmal - Municipio Libre,Uxmal,Municipio Libre,Santa Cruz Atoyac,BENITO JUAREZ,19.371267,-99.158657,3G,30
+ECOBICI,404,Miguel Laurent - Avenida División del Norte,Miguel Laurent,Avenida División del Norte,Portales Norte,BENITO JUAREZ,19.373833,-99.157433,3G,30
+ECOBICI,405,División del Norte - Municipio Libre,División del Norte,Municipio Libre,Portales Norte,BENITO JUAREZ,19.370558,-99.156649,4G,30
+ECOBICI,406,Parroquia - Avenida México Coyoacán,Parroquia,Avenida México Coyoacán,Santa Cruz Atoyac,BENITO JUAREZ,19.367895,-99.16332,3G,21
+ECOBICI,407,Prolongación Xochicalco - General Emiliano Zapata,Prolongación Xochicalco,General Emiliano Zapata,Residencial Emperadores,BENITO JUAREZ,19.367209,-99.15872,3G,21
+ECOBICI,408,Prolongación Petén - General Emiliano Zapata,Prolongación Petén,General Emiliano Zapata,Residencial Emperadores,BENITO JUAREZ,19.366673,-99.156839,3G,27
+ECOBICI,409,Azores - División del Norte,Azores,División del Norte,Santa Cruz Atoyac,BENITO JUAREZ,19.365125,-99.155477,3G,24
+ECOBICI,410,Prolongación Tajín - Prolongación Repúblicas,Prolongación Tajín,Prolongación Repúblicas,Santa Cruz Atoyac,BENITO JUAREZ,19.365499,-99.158087,3G,24
+ECOBICI,411,Parroquia - Avenida México-Coyoacán,Parroquia,Avenida México-Coyoacán,Santa Cruz Atoyac,BENITO JUAREZ,19.368038,-99.164065,3G,36
+ECOBICI,412,Parroquia - Avenida Universidad,Parroquia,Avenida Universidad,Santa Cruz Atoyac,BENITO JUAREZ,19.368107,-99.164376,4G,36
+ECOBICI,413,Parroquia - Avenida Coyoacán,Parroquia,Avenida Coyoacán,Centro Urbano Presidente Alemán,BENITO JUAREZ,19.369823,-99.172164,3G,36
+ECOBICI,414,Parroquia - José Ignacio Bartolache,Parroquia,José Ignacio Bartolache,Del Valle Sur,BENITO JUAREZ,19.370221,-99.173862,3G,30
+ECOBICI,415,San Francisco - Parroquia,San Francisco,Parroquia,Actipan,BENITO JUAREZ,19.37099,-99.176135,3G,30
+ECOBICI,416,Recreo - Parroquia,Recreo,Parroquia,Del Valle Sur,BENITO JUAREZ,19.371279,-99.177623,3G,30
+ECOBICI,417,Goya - Augusto Rodin,Goya,Augusto Rodin,Insurgentes Mixcoac,BENITO JUAREZ,19.373198,-99.184274,4G,30
+ECOBICI,418,Galicia - Actipan,Galicia,Actipan,Insurgentes Mixcoac,BENITO JUAREZ,19.371233,-99.182936,3G,36
+ECOBICI,419,Actipan - Cádiz,Actipan,Cádiz,Insurgentes Mixcoac,BENITO JUAREZ,19.370615,-99.181606,3G,30
+ECOBICI,420,María Luz Bringas - Oso,María Luz Bringas,Oso,Actipan,BENITO JUAREZ,19.369782,-99.179707,3G,27
+ECOBICI,421,María Luz Bringas - Oso,María Luz Bringas,Oso,Actipan,BENITO JUAREZ,19.36952,-99.179421,3G,30
+ECOBICI,422,Búfalo - José María Rico (Eje 8),Búfalo,José María Rico (Eje 8),Actipan,BENITO JUAREZ,19.368403,-99.177472,3G,21
+ECOBICI,423,Moras - José María Rico (Eje 8),Moras,José María Rico (Eje 8),Acacias,BENITO JUAREZ,19.367816,-99.175269,3G,24
+ECOBICI,424,Amores - José María Rico (Eje 8),Amores,José María Rico (Eje 8),Del Valle Sur,BENITO JUAREZ,19.36715,-99.17055,3G,15
+ECOBICI,425,Nicolás San Juan - Avenida Universidad,Nicolás San Juan,Avenida Universidad,Del Valle Sur,BENITO JUAREZ,19.36704,-99.167387,3G,36
+ECOBICI,426,Mayorazgo de Solís - Av. Popocatépetl (Eje 8),Mayorazgo de Solís,Av. Popocatépetl (Eje 8),Xoco,BENITO JUAREZ,19.365648,-99.165943,3G,36
+ECOBICI,427,Avenida México-Coyoacán - Av. Popocatépetl (Eje 8),Avenida México-Coyoacán,Av. Popocatépetl (Eje 8),Santa Cruz Atoyac,BENITO JUAREZ,19.364912,-99.162968,3G,21
+ECOBICI,428,Prolongación Uxmal - Av. Popocatépetl (Eje 8),Prolongación Uxmal,Av. Popocatépetl (Eje 8),General Pedro María Anaya,BENITO JUAREZ,19.363404,-99.160395,3G,27
+ECOBICI,429,Pirineos - Av. Popocatépetl (Eje 8),Pirineos,Av. Popocatépetl (Eje 8),Santa Cruz Atoyac,BENITO JUAREZ,19.363049,-99.158436,3G,21
+ECOBICI,430,Trípoli - Av. Popocatépetl (Eje 8),Trípoli,Av. Popocatépetl (Eje 8),Santa Cruz Atoyac,BENITO JUAREZ,19.36205,-99.154976,3G,30
+ECOBICI,431,Bruno Traven - Paz Montes de Oca,Bruno Traven,Paz Montes de Oca,General Pedro María Anaya,BENITO JUAREZ,19.361426,-99.158317,3G,21
+ECOBICI,432,Carrillo Puerto - Avenida México-Coyoacán,Carrillo Puerto,Avenida México-Coyoacán,General Pedro María Anaya,BENITO JUAREZ,19.361245,-99.16239,3G,36
+ECOBICI,433,José María Olloqui - López Cotilla,José María Olloqui,López Cotilla,Del Valle Sur,BENITO JUAREZ,19.363548,-99.170766,3G,21
+ECOBICI,434,José María Olloqui - Amores,José María Olloqui,Amores,Del Valle Sur,BENITO JUAREZ,19.363741,-99.171268,Multimedial,24
+ECOBICI,435,Rodríguez Saro - Avenida Coyoacán,Rodríguez Saro,Avenida Coyoacán,Del Valle Sur,BENITO JUAREZ,19.36497,-99.172069,3G,36
+ECOBICI,436,Rodríguez Saro - Búfalo,Rodríguez Saro,Búfalo,Actipan,BENITO JUAREZ,19.36623,-99.177904,3G,30
+ECOBICI,437,Moras - Comunal,Moras,Comunal,Acacias,BENITO JUAREZ,19.364916,-99.175985,3G,21
+ECOBICI,438,Adolfo Prieto - José María Olloqui,Adolfo Prieto,José María Olloqui,Acacias,BENITO JUAREZ,19.36473,-99.174447,3G,24
+ECOBICI,439,Amores - Avenida Coyoacán,Amores,Avenida Coyoacán,Acacias,BENITO JUAREZ,19.362037,-99.172683,3G,18
+ECOBICI,440,Real de Mayorazgo - Puente Xoco,Real de Mayorazgo,Puente Xoco,Xoco,BENITO JUAREZ,19.360706,-99.168749,3G,36
+ECOBICI,441,Puente Xoco - Real de Mayorazgo,Puente Xoco,Real de Mayorazgo,Xoco,BENITO JUAREZ,19.361213,-99.16752,3G,36
+ECOBICI,442,Real de Mayorazgo - Avenida México-Coyoacán,Real de Mayorazgo,Avenida México-Coyoacán,Xoco,BENITO JUAREZ,19.359863,-99.165065,4G,24
+ECOBICI,443,Bruno Traven - Golondrinas,Bruno Traven,Golondrinas,General Pedro María Anaya,BENITO JUAREZ,19.359583,-99.162085,3G,30
+ECOBICI,444,General Manuel Rincón - Agustín Gutiérrez,General Manuel Rincón,Agustín Gutiérrez,General Pedro María Anaya,BENITO JUAREZ,19.359475,-99.159437,3G,18
+ECOBICI,445,Riff - Avenida Río Churubusco,Riff,Avenida Río Churubusco,General Pedro María Anaya,BENITO JUAREZ,19.358934,-99.156064,Multimedial,24
+ECOBICI,446,Riff - Avenida Río Churubusco,Riff,Avenida Río Churubusco,General Pedro María Anaya,BENITO JUAREZ,19.3586,-99.156101,4G,36
+ECOBICI,447,Agustín Melgar - Zamora,Agustín Melgar,Zamora,Condesa,CUAUHTEMOC,19.418879,-99.176854,3G,27
+ECOBICI,448,Dr. Andrade - Arcos de Belén,Dr. Andrade,Arcos de Belén,Doctores,CUAUHTEMOC,19.426611,-99.14447,4G,30
+ECOBICI,449,Acapulco - Puebla,Acapulco,Puebla,Roma Norte,CUAUHTEMOC,19.420281,-99.174392,Multimedial,24
+ECOBICI,450,Ramos Arizpe - Av. México Tenochtitlan,Ramos Arizpe,Av. México Tenochtitlan,Tabacalera,CUAUHTEMOC,19.438228,-99.152269,3G,30
+ECOBICI,451,Campos Elíseos - Goldsmith,Campos Elíseos,Goldsmith,Polanco,MIGUEL HIDALGO,19.428847,-99.201299,3G,36
+ECOBICI,452,Leibnitz - Ejército Nacional,Leibnitz,Ejército Nacional,Anzures,MIGUEL HIDALGO,19.435867,-99.179856,3G,18
+ECOBICI,453,Pedregal - Teapa,Pedregal,Teapa,Lomas de Chapultepec Sección IV/Lomas Virreyes,MIGUEL HIDALGO,19.424842,-99.203739,3G,33
+ECOBICI,454,Montes Urales - Monte Pelvoux,Montes Urales,Monte Pelvoux,Lomas de Chapultepec Sección IV/Lomas Virreyes,MIGUEL HIDALGO,19.425905,-99.204236,Multimedial,24
+ECOBICI,455,Pedregal - Ferrocarril de Cuernavaca,Pedregal,Ferrocarril de Cuernavaca,Molino del Rey,MIGUEL HIDALGO,19.426308,-99.2033,3G,21
+ECOBICI,456,Alpes - Montes Escandinavos,Alpes,Montes Escandinavos,Lomas de Chapultepec Sección V,MIGUEL HIDALGO,19.427517,-99.208412,3G,27
+ECOBICI,457,Av. Prado Norte - Explanada,Av. Prado Norte,Explanada,Lomas de Chapultepec Sección V,MIGUEL HIDALGO,19.42703,-99.212845,Multimedial,24
+ECOBICI,458,Montes Urales - Volcán,Montes Urales,Volcán,Lomas de Chapultepec Sección III,MIGUEL HIDALGO,19.428679,-99.206605,3G,24
+ECOBICI,459,Volcán - Montes Urales,Volcán,Montes Urales,Lomas de Chapultepec Sección III,MIGUEL HIDALGO,19.429243,-99.207267,Multimedial,24
+ECOBICI,460,Juan Vázquez de Mella - Homero,Juan Vázquez de Mella,Homero,Polanco Sección I/ Los Morales,MIGUEL HIDALGO,19.437014,-99.207932,3G,33
+ECOBICI,461,Presa Don Martín - Boulevard Miguel de Cervantes Saavedra,Presa Don Martín,Boulevard Miguel de Cervantes Saavedra,Irrigación,MIGUEL HIDALGO,19.440106,-99.210031,3G,33
+ECOBICI,462,Presa Falcón - Presa Danxhó,Presa Falcón,Presa Danxhó,Irrigación,MIGUEL HIDALGO,19.442338,-99.205198,3G,24
+ECOBICI,463,Lago Andrómaco - Lago Zúrich,Lago Andrómaco,Lago Zúrich,Ampliación Granada,MIGUEL HIDALGO,19.443228,-99.202492,3G,30
+ECOBICI,464,Mateo Alemán - Prolongación Moliere,Mateo Alemán,Prolongación Moliere,Ampliación Granada,MIGUEL HIDALGO,19.442421,-99.199838,Multimedial,24
+ECOBICI,465,Lago Ginebra - Lago Wetter,Lago Ginebra,Lago Wetter,Cuauhtémoc Pensil,MIGUEL HIDALGO,19.445039,-99.194078,3G,27
+ECOBICI,466,Lago Onega - Lago Ladoga,Lago Onega,Lago Ladoga,Modelo Pensil,MIGUEL HIDALGO,19.44269,-99.19083,3G,27
+ECOBICI,467,Lago Mayor - Lago Alberto,Lago Mayor,Lago Alberto,Granada,MIGUEL HIDALGO,19.440399,-99.186784,Multimedial,24
+ECOBICI,468,Lago Xochimilco - Av. Ejército Nacional,Lago Xochimilco,Av. Ejército Nacional,Anáhuac I Sección,MIGUEL HIDALGO,19.43726,-99.179624,3G,33
+ECOBICI,469,Bahía De La Concepción - Bahía de Todos Los Santos,Bahía De La Concepción,Bahía de Todos Los Santos,Verónica Anzures,MIGUEL HIDALGO,19.434183,-99.173089,Multimedial,24
+ECOBICI,470,Bahía de las Palmas - Bahía de Todos Los Santos,Bahía de las Palmas,Bahía de Todos Los Santos,Verónica Anzures,MIGUEL HIDALGO,19.435039,-99.173879,3G,27
+ECOBICI,471,Bahía de Chachalacas - Bahía de Santa Bárbara,Bahía de Chachalacas,Bahía de Santa Bárbara,Verónica Anzures,MIGUEL HIDALGO,19.436287,-99.174888,3G,24
+ECOBICI,472,Bahía de Santa Bárbara - Bahía de Ballenas,Bahía de Santa Bárbara,Bahía de Ballenas,Verónica Anzures,MIGUEL HIDALGO,19.437667,-99.17711,Multimedial,24
+ECOBICI,473,Bahía del Espíritu Santo - Bahía de Banderas,Bahía del Espíritu Santo,Bahía de Banderas,Verónica Anzures,MIGUEL HIDALGO,19.438143,-99.17519,4G,36
+ECOBICI,474,Bahía de San Hipólito - Bahía del Espíritu Santo,Bahía de San Hipólito,Bahía del Espíritu Santo,Anáhuac I Sección,MIGUEL HIDALGO,19.438984,-99.177549,3G,33
+ECOBICI,475,Lago Muritz - Lago Alberto,Lago Muritz,Lago Alberto,Anáhuac I Sección,MIGUEL HIDALGO,19.439249,-99.181065,3G,24
+ECOBICI,476,Lago Como - Laguna de Mayrán,Lago Como,Laguna de Mayrán,Granada,MIGUEL HIDALGO,19.442127,-99.184433,4G,36
+ECOBICI,477,Lago Iseo - Laguna de Mayrán,Lago Iseo,Laguna de Mayrán,Anáhuac I Sección,MIGUEL HIDALGO,19.440905,-99.181743,3G,24
+ECOBICI,478,Laguna de Mayrán - Lago Chalco,Laguna de Mayrán,Lago Chalco,Anáhuac I Sección,MIGUEL HIDALGO,19.440818,-99.176961,3G,27
+ECOBICI,479,Lago Muritz - Av. Marina Nacional,Lago Muritz,Av. Marina Nacional,Mariano Escobedo,MIGUEL HIDALGO,19.444433,-99.179664,Multimedial,24
+ECOBICI,480,Lago Iseo - Av. Marina Nacional,Lago Iseo,Av. Marina Nacional,Mariano Escobedo,MIGUEL HIDALGO,19.446073,-99.181654,3G,21

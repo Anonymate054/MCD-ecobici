@@ -1,0 +1,46 @@
+# conda env create --file environment.yml
+# mamba env create --file environment.yml
+# conda env export --from-history > environment.yml
+
+name: ecobici
+channels:
+  - anaconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - black
+  - pylint
+  - invoke
+  - ipykernel
+  - ipython
+  - jupyter
+  - jupyterlab
+  - python-dotenv
+  - pyprojroot
+  - fs
+  - nbdime
+  - numpy
+  - pandas
+  - pyjanitor
+  - matplotlib
+  - seaborn
+  - missingno
+  - pandas-flavor
+  - ydata-profiling
+  - lightgbm
+  - catboost
+  - xgboost
+  - optuna
+  - statsmodels
+  - scikit-learn
+  - scipy
+  - requests
+  - geopy
+  - folium
+  - simpledbf
+  - geopandas
+  - unidecode
+  - xgboost
+  - sklearn
