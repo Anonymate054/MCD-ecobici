@@ -1,0 +1,148 @@
+# ==============================================================================
+# SECRETS & ENVIRONMENT — NEVER COMMIT THESE
+# ==============================================================================
+.env
+*.env
+.env.local
+.env.*.local
+access_aws.txt
+influx_credentials.txt
+secrets/
+
+# ==============================================================================
+# TERRAFORM
+# ==============================================================================
+# Local .terraform directories (plugins, modules cache)
+**/.terraform/*
+.terraform/
+
+# Terraform state files — contain sensitive output values
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Terraform plan output (may contain secrets in plaintext)
+*.tfplan
+*.tfplan.*
+
+# Terraform lock file (keep this in VCS for reproducible runs)
+# .terraform.lock.hcl  ← intentionally NOT ignored
+
+# Terraform override files (local developer overrides)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform CLI configuration (personal auth tokens)
+.terraformrc
+terraform.rc
+
+# ==============================================================================
+# PYTHON
+# ==============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+MANIFEST
+wheels/
+*.whl
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+pytest.ini
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints/
+
+# pyenv
+.python-version
+
+# mypy / type-checking caches
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ruff / Flake8 / isort caches
+.ruff_cache/
+
+# ==============================================================================
+# AWS
+# ==============================================================================
+# AWS CLI credentials (should use IAM roles in CI/CD)
+.aws/
+
+# Lambda deployment packages (built artifacts)
+src/lambdas/*.zip
+src/lambdas/package/
+
+# ==============================================================================
+# DATA FILES — keep out of Git (use S3 instead)
+# ==============================================================================
+*.csv
+*.parquet
+*.json.gz
+data/
+downloads/
+tmp/
+
+# ==============================================================================
+# EDITORS & OS
+# ==============================================================================
+# VSCode
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==============================================================================
+# LOGS
+# ==============================================================================
+*.log
+logs/

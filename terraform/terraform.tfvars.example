@@ -1,0 +1,19 @@
+# Copy this file to terraform.tfvars and fill in your values.
+# NEVER commit terraform.tfvars — it is already in .gitignore.
+
+aws_region     = "us-east-1"
+project_prefix = "ecobici"
+
+# Must be globally unique. Convention: ecobici-datalake-<your_aws_account_id>
+s3_bucket_name = "ecobici-datalake-123456789012"
+
+# Email for SNS alarm notifications
+alert_email = "your@email.com"
+
+# --- Optional overrides (defaults shown) ---
+# athena_results_prefix      = "athena-results/"
+# firehose_buffer_interval   = 60
+# firehose_buffer_size       = 5
+# lambda_timeout             = 60
+# maintenance_lambda_timeout = 300
+# snapshot_retention_days    = 7
