@@ -146,27 +146,11 @@ resource "aws_athena_workgroup" "main" {
 # 100% public and requires no authentication. The discovery URL is passed
 # directly as a Lambda environment variable.
 
-resource "aws_secretsmanager_secret" "weather_api" {
-  name                    = "${var.project_prefix}/weather_api"
-  description             = "Institutional weather API (SMN/REDMET/OH-UNAM) URL and key."
-  recovery_window_in_days = 7
 
-  tags = {
-    Name = "${var.project_prefix}-weather-api-secret"
-  }
-}
+# Note: ecobici/weather_api secret removed — the Open-Meteo weather API is
+# 100% public and requires no authentication. Station coordinates are read
+# from the daily station_info file in S3 (written by ingest_gbfs Lambda).
 
-resource "aws_secretsmanager_secret_version" "weather_api_placeholder" {
-  secret_id = aws_secretsmanager_secret.weather_api.id
-  secret_string = jsonencode({
-    url     = "https://smn.conagua.gob.mx/tools/GUI/webservices/"
-    api_key = "REPLACE_ME"
-  })
-
-  lifecycle {
-    ignore_changes = [secret_string]
-  }
-}
 
 ##############################################################################
 # SSM Parameter — Daily station_info refresh tracking

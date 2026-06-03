@@ -1,52 +1,26 @@
 -- =============================================================================
--- views.sql — Geospatial Materialized Views
+-- views.sql — Geospatial Views for Ecobici Data Lake
 -- =============================================================================
 
 -- =============================================================================
 -- View 1: vw_ecobici_weather_mapping
--- Maps each Ecobici station to its nearest weather station via ST_Distance.
+-- Maps each Ecobici station to its weather data.
+-- Since we use Open-Meteo per-station coordinates, each Ecobici station
+-- IS its own weather station (station_id is shared across both tables).
+-- The view keeps the original interface so rollups.sql doesn't need changing.
 -- =============================================================================
 
 CREATE OR REPLACE VIEW ecobici_lake.vw_ecobici_weather_mapping AS
-WITH distances AS (
-    SELECT
-        e.station_id                   AS ecobici_station_id,
-        e.name                         AS ecobici_name,
-        e.lat                          AS ecobici_lat,
-        e.lon                          AS ecobici_lon,
-        w.station_id                   AS weather_station_id,
-        w.lat                          AS weather_lat,
-        w.lon                          AS weather_lon,
-        ST_Distance(
-            ST_Point(e.lon, e.lat),
-            ST_Point(w.lon, w.lat)
-        ) * 111139                     AS distance_m  -- degrees → meters (~lat CDMX)
-    FROM ecobici_lake.ecobici_station_info e
-    CROSS JOIN (
-        -- Replace with a dedicated weather_station_info table when available
-        SELECT DISTINCT station_id, 0.0 AS lat, 0.0 AS lon
-        FROM ecobici_lake.weather_observations
-    ) w
-),
-ranked AS (
-    SELECT *,
-        ROW_NUMBER() OVER (
-            PARTITION BY ecobici_station_id
-            ORDER BY distance_m ASC
-        ) AS rank
-    FROM distances
-)
 SELECT
-    ecobici_station_id,
-    ecobici_name,
-    ecobici_lat,
-    ecobici_lon,
-    weather_station_id,
-    weather_lat,
-    weather_lon,
-    ROUND(distance_m, 1) AS distance_m
-FROM ranked
-WHERE rank = 1;
+    e.station_id    AS ecobici_station_id,
+    e.name          AS ecobici_name,
+    e.lat           AS ecobici_lat,
+    e.lon           AS ecobici_lon,
+    e.station_id    AS weather_station_id,  -- same ID — direct match
+    e.lat           AS weather_lat,
+    e.lon           AS weather_lon,
+    0.0             AS distance_m           -- co-located (same station)
+FROM ecobici_lake.ecobici_station_info e;
 
 
 -- =============================================================================

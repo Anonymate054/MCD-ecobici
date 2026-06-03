@@ -43,6 +43,11 @@ output "lambda_maintenance_arn" {
   value       = aws_lambda_function.maintenance.arn
 }
 
+output "lambda_loader_arn" {
+  description = "ARN of the Iceberg loader Lambda (runs every 30 min)."
+  value       = aws_lambda_function.loader.arn
+}
+
 output "sns_alerts_arn" {
   description = "ARN of the SNS alerts topic."
   value       = aws_sns_topic.alerts.arn
@@ -53,10 +58,9 @@ output "gbfs_discovery_url" {
   value       = "https://gbfs.mex.lyftbikes.com/gbfs/gbfs.json"
 }
 
-output "weather_secret_arn" {
-  description = "ARN of the weather API secret in Secrets Manager."
-  value       = aws_secretsmanager_secret.weather_api.arn
-  sensitive   = true
+output "open_meteo_url" {
+  description = "Public weather API (Open-Meteo) — no authentication required."
+  value       = "https://api.open-meteo.com/v1/forecast"
 }
 
 output "ssm_station_info_refresh_param" {
