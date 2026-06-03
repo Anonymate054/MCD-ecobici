@@ -3,16 +3,21 @@ ingest_gbfs.py — Ecobici GBFS Station Status & Info Ingestor
 =============================================================
 Triggered every 5 minutes by EventBridge.
 
+The Lyft/Ecobici CDMX GBFS feed is 100% public — no API key or auth required.
+The discovery URL (gbfs.json) is read first to auto-resolve the feed URLs,
+making the Lambda resilient to future endpoint URL changes.
+
 Responsibilities:
-  1. Fetch station_status.json from the GBFS feed and push records to Firehose.
-  2. Once daily, fetch station_information.json and write it to S3 as Parquet
-     (tracked via an SSM parameter to avoid redundant daily calls).
+  1. Auto-discover feed URLs from the GBFS discovery endpoint.
+  2. Fetch station_status.json and push records to Kinesis Firehose.
+  3. Once daily, fetch station_information.json and write to S3
+     (gated by an SSM parameter to avoid redundant calls).
 
 Env vars (injected by Terraform):
-  GBFS_SECRET_NAME     - Secrets Manager secret name for GBFS API credentials
+  GBFS_DISCOVERY_URL   - Public GBFS discovery URL (no auth)
   FIREHOSE_STREAM_NAME - Kinesis Data Firehose delivery stream name
   S3_BUCKET            - S3 data lake bucket name
-  SSM_REFRESH_PARAM    - SSM parameter name tracking last station_info refresh date
+  SSM_REFRESH_PARAM    - SSM parameter tracking last station_info refresh date
   GLUE_DATABASE        - Glue catalog database name
   ATHENA_WORKGROUP     - Athena workgroup name
 """
@@ -20,59 +25,43 @@ Env vars (injected by Terraform):
 import json
 import logging
 import os
-from datetime import datetime, timezone, date
+import urllib.error
+import urllib.request
+from datetime import date, datetime, timezone
 from typing import Any
 
 import boto3
-import urllib.request
-import urllib.error
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 # ---------------------------------------------------------------------------
-# AWS clients — instantiated outside handler for connection reuse
+# AWS clients (outside handler for connection reuse)
 # ---------------------------------------------------------------------------
-secrets_client   = boto3.client("secretsmanager")
-firehose_client  = boto3.client("firehose")
-ssm_client       = boto3.client("ssm")
-s3_client        = boto3.client("s3")
+firehose_client = boto3.client("firehose")
+ssm_client      = boto3.client("ssm")
+s3_client       = boto3.client("s3")
 
 # ---------------------------------------------------------------------------
 # Environment
 # ---------------------------------------------------------------------------
-GBFS_SECRET_NAME     = os.environ["GBFS_SECRET_NAME"]
+GBFS_DISCOVERY_URL   = os.environ["GBFS_DISCOVERY_URL"]
 FIREHOSE_STREAM_NAME = os.environ["FIREHOSE_STREAM_NAME"]
 S3_BUCKET            = os.environ["S3_BUCKET"]
 SSM_REFRESH_PARAM    = os.environ["SSM_REFRESH_PARAM"]
 
-# GBFS feed endpoint suffixes
-STATUS_PATH = "/en/station_status.json"
-INFO_PATH   = "/en/station_information.json"
-
 
 # ---------------------------------------------------------------------------
-# Helpers
+# HTTP helper — unauthenticated, encoding-resilient
 # ---------------------------------------------------------------------------
 
-def _get_secret() -> dict:
-    """Retrieve GBFS API credentials from Secrets Manager."""
-    response = secrets_client.get_secret_value(SecretId=GBFS_SECRET_NAME)
-    return json.loads(response["SecretString"])
-
-
-def _http_get(url: str, api_key: str | None = None) -> dict:
-    """Simple HTTPS GET returning parsed JSON. Raises on non-200."""
-    headers = {}
-    if api_key:
-        headers["Authorization"] = f"Bearer {api_key}"
-
-    req = urllib.request.Request(url, headers=headers)
+def _http_get(url: str) -> dict:
+    """Simple HTTPS GET returning parsed JSON. No authentication required."""
+    req = urllib.request.Request(url)
     with urllib.request.urlopen(req, timeout=15) as resp:
         if resp.status != 200:
             raise RuntimeError(f"HTTP {resp.status} from {url}")
         raw = resp.read()
-        # Try UTF-8 first; fall back to latin-1 (used by some Mexican gov APIs)
         for enc in ("utf-8", "utf-8-sig", "latin-1"):
             try:
                 return json.loads(raw.decode(enc))
@@ -80,6 +69,38 @@ def _http_get(url: str, api_key: str | None = None) -> dict:
                 continue
         raise RuntimeError(f"Could not decode response from {url}")
 
+
+# ---------------------------------------------------------------------------
+# GBFS auto-discovery
+# ---------------------------------------------------------------------------
+
+def _discover_feed_urls() -> dict[str, str]:
+    """
+    Fetch the GBFS discovery document and return a mapping of feed name → URL.
+    Prefers the 'en' language feed; falls back to the first available language.
+
+    Example result:
+        {
+          "station_status":      "https://.../en/station_status.json",
+          "station_information": "https://.../en/station_information.json",
+          ...
+        }
+    """
+    data = _http_get(GBFS_DISCOVERY_URL)
+    feeds_by_lang = data.get("data", {})
+
+    # Prefer English feeds
+    lang_feeds = feeds_by_lang.get("en") or next(iter(feeds_by_lang.values()), {})
+    feeds = lang_feeds.get("feeds", [])
+
+    url_map = {feed["name"]: feed["url"] for feed in feeds}
+    logger.info("Discovered %d GBFS feeds: %s", len(url_map), list(url_map.keys()))
+    return url_map
+
+
+# ---------------------------------------------------------------------------
+# Record builders
+# ---------------------------------------------------------------------------
 
 def _build_status_records(stations: list[dict], ingest_ts: str) -> list[dict]:
     """Normalise raw GBFS station_status data into the target schema."""
@@ -97,51 +118,45 @@ def _build_status_records(stations: list[dict], ingest_ts: str) -> list[dict]:
     return records
 
 
-def _push_to_firehose(records: list[dict]) -> None:
-    """Send records to Kinesis Firehose as newline-delimited JSON batches (max 500/batch)."""
-    batch_size = 500
-    total_sent = 0
+# ---------------------------------------------------------------------------
+# Firehose batcher
+# ---------------------------------------------------------------------------
 
-    for i in range(0, len(records), batch_size):
-        batch = records[i : i + batch_size]
-        firehose_records = [
-            {"Data": (json.dumps(r) + "\n").encode("utf-8")}
-            for r in batch
-        ]
+def _push_to_firehose(records: list[dict]) -> None:
+    """Send records to Kinesis Firehose as newline-delimited JSON (max 500/batch)."""
+    total_sent = 0
+    for i in range(0, len(records), 500):
+        batch = records[i : i + 500]
         response = firehose_client.put_record_batch(
             DeliveryStreamName=FIREHOSE_STREAM_NAME,
-            Records=firehose_records,
+            Records=[{"Data": (json.dumps(r) + "\n").encode("utf-8")} for r in batch],
         )
         failed = response.get("FailedPutCount", 0)
         if failed > 0:
-            logger.warning("Firehose: %d records failed in batch starting at %d", failed, i)
+            logger.warning("Firehose: %d records failed in batch at offset %d", failed, i)
         total_sent += len(batch) - failed
 
     logger.info("Firehose: pushed %d/%d records to %s", total_sent, len(records), FIREHOSE_STREAM_NAME)
 
 
+# ---------------------------------------------------------------------------
+# SSM-gated daily station_info refresh
+# ---------------------------------------------------------------------------
+
 def _should_refresh_station_info() -> bool:
     """Return True if station_info has not been refreshed today (UTC)."""
-    today_str = date.today().isoformat()
     response  = ssm_client.get_parameter(Name=SSM_REFRESH_PARAM)
     last_date = response["Parameter"]["Value"]
-    return last_date != today_str
+    return last_date != date.today().isoformat()
 
 
 def _mark_station_info_refreshed() -> None:
     """Update the SSM parameter with today's date."""
-    ssm_client.put_parameter(
-        Name=SSM_REFRESH_PARAM,
-        Value=date.today().isoformat(),
-        Overwrite=True,
-    )
+    ssm_client.put_parameter(Name=SSM_REFRESH_PARAM, Value=date.today().isoformat(), Overwrite=True)
 
 
 def _write_station_info_to_s3(stations: list[dict], ingest_ts: str) -> None:
-    """
-    Serialize station info to newline-delimited JSON and write to S3.
-    A Glue Crawler or Iceberg MERGE can pick this up for SCD Type-1 updates.
-    """
+    """Write station_information records as newline-delimited JSON to S3."""
     now = datetime.now(timezone.utc)
     key = (
         f"raw/station_info/"
@@ -178,23 +193,28 @@ def handler(event: Any, context: Any) -> dict:
     ingest_ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     try:
-        secret = _get_secret()
-        base_url = secret["url"].rstrip("/")
-        api_key  = secret.get("api_key")
+        # Auto-discover feed URLs from the public GBFS manifest
+        feed_urls = _discover_feed_urls()
 
-        # --- 1. Station Status (every invocation) ---
-        logger.info("Fetching station status from %s%s", base_url, STATUS_PATH)
-        status_data = _http_get(f"{base_url}{STATUS_PATH}", api_key)
+        status_url = feed_urls.get("station_status")
+        info_url   = feed_urls.get("station_information")
+
+        if not status_url:
+            raise RuntimeError("station_status feed not found in GBFS discovery document")
+
+        # ── 1. Station Status (every 5-min invocation) ──────────────────────
+        logger.info("Fetching station_status from %s", status_url)
+        status_data     = _http_get(status_url)
         stations_status = status_data["data"]["stations"]
         logger.info("Received %d station status records", len(stations_status))
 
         records = _build_status_records(stations_status, ingest_ts)
         _push_to_firehose(records)
 
-        # --- 2. Station Info (once daily) ---
-        if _should_refresh_station_info():
-            logger.info("Fetching station info (daily refresh)...")
-            info_data = _http_get(f"{base_url}{INFO_PATH}", api_key)
+        # ── 2. Station Info (once daily, SSM-gated) ─────────────────────────
+        if info_url and _should_refresh_station_info():
+            logger.info("Fetching station_information (daily refresh) from %s", info_url)
+            info_data     = _http_get(info_url)
             stations_info = info_data["data"]["stations"]
             _write_station_info_to_s3(stations_info, ingest_ts)
             _mark_station_info_refreshed()
@@ -203,9 +223,9 @@ def handler(event: Any, context: Any) -> dict:
             logger.info("Station info already refreshed today — skipping.")
 
         return {
-            "statusCode":    200,
+            "statusCode":      200,
             "stations_pushed": len(records),
-            "ingest_ts":     ingest_ts,
+            "ingest_ts":       ingest_ts,
         }
 
     except urllib.error.URLError as exc:

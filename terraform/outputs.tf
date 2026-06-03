@@ -48,10 +48,9 @@ output "sns_alerts_arn" {
   value       = aws_sns_topic.alerts.arn
 }
 
-output "gbfs_secret_arn" {
-  description = "ARN of the GBFS API secret in Secrets Manager."
-  value       = aws_secretsmanager_secret.gbfs_api.arn
-  sensitive   = true
+output "gbfs_discovery_url" {
+  description = "Public GBFS discovery URL (no authentication required)."
+  value       = "https://gbfs.mex.lyftbikes.com/gbfs/gbfs.json"
 }
 
 output "weather_secret_arn" {

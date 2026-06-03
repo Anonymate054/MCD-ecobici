@@ -31,17 +31,13 @@ AWS_REGION              = "us-east-1"
 S3_BUCKET               = "test-ecobici-datalake"
 FIREHOSE_STATION_STREAM = "ecobici-station-status"
 FIREHOSE_WEATHER_STREAM = "ecobici-weather"
-GBFS_SECRET_NAME        = "ecobici/gbfs_api"
+GBFS_DISCOVERY_URL      = "https://gbfs.mex.lyftbikes.com/gbfs/gbfs.json"
 WEATHER_SECRET_NAME     = "ecobici/weather_api"
 SSM_REFRESH_PARAM       = "/ecobici/last_station_info_refresh"
 GLUE_DATABASE           = "ecobici_lake"
 ATHENA_WORKGROUP        = "ecobici-workgroup"
 SNAPSHOT_DAYS           = "7"
 
-GBFS_SECRET_VALUE = json.dumps({
-    "url":     "https://gbfs.mex.lyft.com/gbfs/2.3/mex_mexico_city",
-    "api_key": "test-api-key",
-})
 WEATHER_SECRET_VALUE = json.dumps({
     "url":     "https://smn.conagua.gob.mx/tools/GUI/webservices/",
     "api_key": "test-weather-key",
@@ -60,8 +56,8 @@ def aws_env(monkeypatch):
     monkeypatch.setenv("AWS_SECURITY_TOKEN",     "testing")
     monkeypatch.setenv("AWS_SESSION_TOKEN",      "testing")
 
-    # ingest_gbfs vars
-    monkeypatch.setenv("GBFS_SECRET_NAME",        GBFS_SECRET_NAME)
+    # ingest_gbfs vars — no secret needed, uses public GBFS URL
+    monkeypatch.setenv("GBFS_DISCOVERY_URL",      GBFS_DISCOVERY_URL)
     monkeypatch.setenv("FIREHOSE_STREAM_NAME",    FIREHOSE_STATION_STREAM)
     monkeypatch.setenv("S3_BUCKET",               S3_BUCKET)
     monkeypatch.setenv("SSM_REFRESH_PARAM",       SSM_REFRESH_PARAM)
@@ -95,9 +91,10 @@ def s3_bucket(aws_mock):
 
 @pytest.fixture
 def secrets(aws_mock):
-    """Seed Secrets Manager with GBFS and weather API secrets."""
+    """Seed Secrets Manager with the weather API secret.
+    (No GBFS secret — the Lyft/Ecobici feed is 100% public.)
+    """
     client = boto3.client("secretsmanager", region_name=AWS_REGION)
-    client.create_secret(Name=GBFS_SECRET_NAME,    SecretString=GBFS_SECRET_VALUE)
     client.create_secret(Name=WEATHER_SECRET_NAME, SecretString=WEATHER_SECRET_VALUE)
     return client
 

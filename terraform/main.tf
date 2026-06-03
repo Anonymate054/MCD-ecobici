@@ -142,29 +142,9 @@ resource "aws_athena_workgroup" "main" {
 # Secrets Manager — API Credentials
 ##############################################################################
 
-resource "aws_secretsmanager_secret" "gbfs_api" {
-  name                    = "${var.project_prefix}/gbfs_api"
-  description             = "Ecobici GBFS API URL and key."
-  recovery_window_in_days = 7
-
-  tags = {
-    Name = "${var.project_prefix}-gbfs-api-secret"
-  }
-}
-
-# Placeholder: populate manually after apply (see README Section 4)
-resource "aws_secretsmanager_secret_version" "gbfs_api_placeholder" {
-  secret_id = aws_secretsmanager_secret.gbfs_api.id
-  secret_string = jsonencode({
-    url     = "https://gbfs.mex.lyft.com/gbfs/2.3/mex_mexico_city"
-    api_key = "REPLACE_ME"
-  })
-
-  lifecycle {
-    # Prevent Terraform from overwriting manually set values on subsequent applies
-    ignore_changes = [secret_string]
-  }
-}
+# Note: ecobici/gbfs_api secret removed — the Lyft/Ecobici GBFS feed is
+# 100% public and requires no authentication. The discovery URL is passed
+# directly as a Lambda environment variable.
 
 resource "aws_secretsmanager_secret" "weather_api" {
   name                    = "${var.project_prefix}/weather_api"

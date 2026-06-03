@@ -86,13 +86,7 @@ data "aws_iam_policy_document" "lambda_ingest_gbfs_policy" {
     resources = [aws_kinesis_firehose_delivery_stream.station_status.arn]
   }
 
-  # Secrets Manager: only GBFS secret
-  statement {
-    sid       = "GetGbfsSecret"
-    effect    = "Allow"
-    actions   = ["secretsmanager:GetSecretValue"]
-    resources = [aws_secretsmanager_secret.gbfs_api.arn]
-  }
+  # No Secrets Manager access needed — GBFS feed is 100% public (no API key)
 
   # SSM: read/write last_station_info_refresh parameter
   statement {
@@ -262,7 +256,7 @@ resource "aws_lambda_function" "ingest_gbfs" {
 
   environment {
     variables = {
-      GBFS_SECRET_NAME     = aws_secretsmanager_secret.gbfs_api.name
+      GBFS_DISCOVERY_URL   = "https://gbfs.mex.lyftbikes.com/gbfs/gbfs.json"
       FIREHOSE_STREAM_NAME = aws_kinesis_firehose_delivery_stream.station_status.name
       S3_BUCKET            = aws_s3_bucket.datalake.id
       SSM_REFRESH_PARAM    = aws_ssm_parameter.last_station_info_refresh.name

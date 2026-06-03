@@ -8,11 +8,12 @@ resource "aws_glue_catalog_database" "ecobici" {
 }
 
 ##############################################################################
-# Iceberg Tables via Glue
-# Notes:
-#   - table_type = "ICEBERG" requires Glue Catalog with Iceberg support.
-#   - Athena engine v3 is used for all DML (see workgroup in main.tf).
-#   - Partitioning is declared via parameters; Iceberg manages partition evolution.
+# Iceberg Tables via Glue open_table_format_input
+#
+# AWS requirement: when using open_table_format_input { iceberg_input {} }
+# you must NOT include table_type or metadata_location in the parameters block
+# (they are reserved by AWS and injected automatically).
+# Partition specs and format are handled by Athena DDL after table creation.
 ##############################################################################
 
 # --- 1. raw_station_status ---------------------------------------------------
@@ -21,6 +22,7 @@ resource "aws_glue_catalog_table" "raw_station_status" {
   name          = "raw_station_status"
   database_name = aws_glue_catalog_database.ecobici.name
   description   = "5-minute bike station availability snapshots from the Ecobici GBFS feed."
+  table_type    = "EXTERNAL_TABLE"
 
   open_table_format_input {
     iceberg_input {
@@ -74,13 +76,6 @@ resource "aws_glue_catalog_table" "raw_station_status" {
       comment = "Lambda processing timestamp"
     }
   }
-
-  parameters = {
-    "table_type"        = "ICEBERG"
-    "format"            = "parquet"
-    "write_compression" = "snappy"
-    "partition_spec"    = "[{\"name\":\"day\",\"transform\":\"day\",\"source-id\":1}]"
-  }
 }
 
 # --- 2. ecobici_station_info -------------------------------------------------
@@ -89,6 +84,7 @@ resource "aws_glue_catalog_table" "ecobici_station_info" {
   name          = "ecobici_station_info"
   database_name = aws_glue_catalog_database.ecobici.name
   description   = "Daily refreshed Ecobici station metadata (SCD Type 1)."
+  table_type    = "EXTERNAL_TABLE"
 
   open_table_format_input {
     iceberg_input {
@@ -137,12 +133,6 @@ resource "aws_glue_catalog_table" "ecobici_station_info" {
       comment = "Timestamp of last info refresh"
     }
   }
-
-  parameters = {
-    "table_type"        = "ICEBERG"
-    "format"            = "parquet"
-    "write_compression" = "snappy"
-  }
 }
 
 # --- 3. weather_observations -------------------------------------------------
@@ -151,6 +141,7 @@ resource "aws_glue_catalog_table" "weather_observations" {
   name          = "weather_observations"
   database_name = aws_glue_catalog_database.ecobici.name
   description   = "10-minute institutional weather observations (SMN/REDMET/OH-UNAM), micro-cleaned."
+  table_type    = "EXTERNAL_TABLE"
 
   open_table_format_input {
     iceberg_input {
@@ -194,13 +185,6 @@ resource "aws_glue_catalog_table" "weather_observations" {
       comment = "True if value was forward-filled (missing up to 30 min)"
     }
   }
-
-  parameters = {
-    "table_type"        = "ICEBERG"
-    "format"            = "parquet"
-    "write_compression" = "snappy"
-    "partition_spec"    = "[{\"name\":\"day\",\"transform\":\"day\",\"source-id\":1}]"
-  }
 }
 
 # --- 4. hourly_station_status ------------------------------------------------
@@ -208,7 +192,8 @@ resource "aws_glue_catalog_table" "weather_observations" {
 resource "aws_glue_catalog_table" "hourly_station_status" {
   name          = "hourly_station_status"
   database_name = aws_glue_catalog_database.ecobici.name
-  description   = "Hourly rollup with heuristic malfunction detection flag. Populated via Athena CTAS."
+  description   = "Hourly rollup with heuristic malfunction detection. Populated via Athena CTAS."
+  table_type    = "EXTERNAL_TABLE"
 
   open_table_format_input {
     iceberg_input {
@@ -259,24 +244,17 @@ resource "aws_glue_catalog_table" "hourly_station_status" {
     columns {
       name    = "is_heuristically_broken"
       type    = "boolean"
-      comment = "True if heuristic malfunction detected (frozen count or native flag)"
+      comment = "True if heuristic malfunction detected"
     }
     columns {
       name    = "temp_c"
       type    = "double"
-      comment = "Nearest weather station temperature (joined via vw_ecobici_weather_mapping)"
+      comment = "Nearest weather station temperature"
     }
     columns {
       name    = "precip_mm"
       type    = "double"
       comment = "Nearest weather station precipitation"
     }
-  }
-
-  parameters = {
-    "table_type"        = "ICEBERG"
-    "format"            = "parquet"
-    "write_compression" = "snappy"
-    "partition_spec"    = "[{\"name\":\"month\",\"transform\":\"month\",\"source-id\":1}]"
   }
 }
