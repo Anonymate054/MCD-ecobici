@@ -265,13 +265,13 @@ aws lambda invoke \
 
 ### `ingest_weather.py` — Institutional Weather Ingestor
 
-- **Trigger:** EventBridge every **10 minutes**
+- **Trigger:** EventBridge every **1 hour**
 - **Timeout:** 60 seconds | **Memory:** 256 MB
 - **What it does:**
   1. Fetches observations from SMN/REDMET/OH-UNAM API.
   2. Applies in-memory micro-cleaning:
      - Rejects temperature readings outside `[-10°C, 50°C]`.
-     - Forward-fills missing readings up to **30 minutes**.
+     - Forward-fills missing readings up to **1 hour**.
   3. Sends cleaned records to the `ecobici-weather` Firehose stream.
 
 ### `maintenance.py` — Iceberg Table Maintenance

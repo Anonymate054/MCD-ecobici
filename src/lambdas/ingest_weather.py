@@ -1,7 +1,7 @@
 """
 ingest_weather.py — CDMX Weather Observations Ingestor
 =======================================================
-Triggered every 10 minutes by EventBridge.
+Triggered every 1 hour by EventBridge.
 
 Data source: Open-Meteo (https://open-meteo.com)
   - 100% free, no API key, no authentication required.
@@ -48,7 +48,7 @@ FIREHOSE_STREAM_NAME = os.environ["FIREHOSE_STREAM_NAME"]
 # Micro-cleaning constants
 TEMP_MIN_C             = -10.0
 TEMP_MAX_C             = 50.0
-FORWARD_FILL_MAX_SLOTS = 3   # 3 × 10-min slots = 30 minutes max forward-fill
+FORWARD_FILL_MAX_SLOTS = 1   # 1 × 1-hour slot = 1 hour max forward-fill
 
 # Open-Meteo endpoint (no auth, multi-location, free tier: 10k req/day)
 OPEN_METEO_URL = (

@@ -140,7 +140,7 @@ resource "aws_glue_catalog_table" "ecobici_station_info" {
 resource "aws_glue_catalog_table" "weather_observations" {
   name          = "weather_observations"
   database_name = aws_glue_catalog_database.ecobici.name
-  description   = "10-minute institutional weather observations (SMN/REDMET/OH-UNAM), micro-cleaned."
+  description   = "Hourly weather observations (Open-Meteo), micro-cleaned."
   table_type    = "EXTERNAL_TABLE"
 
   open_table_format_input {
