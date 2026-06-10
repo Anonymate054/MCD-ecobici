@@ -362,6 +362,7 @@ def handler(event: Any, context: Any) -> dict:
 
         # 7. Aggregate and Join Weather, INSERT into target 1h
         insert_1h_sql = f"""
+        INSERT INTO historical_station_status_1h
         WITH hourly_agg AS (
             SELECT
                 date_trunc('hour', timestamp) AS hour,
@@ -413,7 +414,6 @@ def handler(event: Any, context: Any) -> dict:
                 ON  w.hour       = h.hour
                 AND w.station_id = vm.weather_station_id
         )
-        INSERT INTO historical_station_status_1h
         SELECT
             hour,
             station_id,
@@ -430,7 +430,6 @@ def handler(event: Any, context: Any) -> dict:
             COALESCE(precip_mm, 0.0) AS precip_mm,
             station_state
         FROM joined
-        ORDER BY hour, station_id
         """
         _run_query_dml(insert_1h_sql, "Insert target 15m to target 1h (with weather)")
 
