@@ -6,6 +6,7 @@
 .env.local
 .env.*.local
 access_aws.txt
+colab_credentials.txt
 influx_credentials.txt
 secrets/
 
