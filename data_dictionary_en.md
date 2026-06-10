@@ -2,13 +2,11 @@
 
 This document contains descriptions, column schemas, and representative samples for each table available in the Ecobici Datalake (`ecobici_lake`).
 
----
-
-## Table: `raw_station_status`
-**Description:** 5-minute raw bike and dock availability snapshots ingested directly from the Ecobici GBFS feed.
+## Tabla: `raw_station_status`
+**Descripción:** 5-minute raw bike and dock availability snapshots ingested directly from the Ecobici GBFS feed.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `timestamp` | Timestamp of the observation (UTC). |
 | `station_id` | Unique identifier of the station. |
@@ -22,17 +20,17 @@ This document contains descriptions, column schemas, and representative samples 
 ### Data Sample
 | timestamp | station_id | bikes_available | docks_available | is_renting | is_returning | _ingest_at | station_state |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-09 21:31:50.000000 | 1 | 10 | 25 | true | true | 2026-06-09 21:31:50.000000 | NORMAL |
-| 2026-06-09 21:31:50.000000 | 5 | 0 | 19 | true | true | 2026-06-09 21:31:50.000000 | STARVED |
-| 2026-06-09 21:31:50.000000 | 6 | 3 | 22 | true | true | 2026-06-09 21:31:50.000000 | NORMAL |
+| 2026-06-09 21:31:50.000000 | 1 | 10 | 25 | true | true | 2026-06-09 21:31:50.000000 |  |
+| 2026-06-09 21:31:50.000000 | 5 | 0 | 19 | true | true | 2026-06-09 21:31:50.000000 |  |
+| 2026-06-09 21:31:50.000000 | 6 | 3 | 22 | true | true | 2026-06-09 21:31:50.000000 |  |
 
 ---
 
-## Table: `weather_observations`
-**Description:** Real-time weather observations ingested every 15 minutes from Open-Meteo's current endpoint.
+## Tabla: `weather_observations`
+**Descripción:** Real-time weather observations ingested every 15 minutes from Open-Meteo current endpoint.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `timestamp` | Timestamp of the weather observation (UTC). |
 | `station_id` | Unique identifier of the nearest Ecobici station. |
@@ -43,17 +41,17 @@ This document contains descriptions, column schemas, and representative samples 
 ### Data Sample
 | timestamp | station_id | temp_c | precip_mm | _is_filled |
 | --- | --- | --- | --- | --- |
-| 2026-06-07 22:07:07.000000 | 1 | 18.7 | 2.1 | false |
-| 2026-06-07 22:07:07.000000 | 5 | 18.9 | 2.5 | false |
-| 2026-06-07 22:07:07.000000 | 6 | 18.9 | 2.5 | false |
+| 2026-06-09 08:07:07.000000 | 1 | 15.5 | 0.1 | false |
+| 2026-06-09 08:07:07.000000 | 5 | 15.4 | 0.1 | false |
+| 2026-06-09 08:07:07.000000 | 6 | 15.4 | 0.1 | false |
 
 ---
 
-## Table: `station_status_15m`
-**Description:** Online 15-minute intermediate aggregated rollup combining station statuses and real-time weather.
+## Tabla: `station_status_15m`
+**Descripción:** Online 15-minute intermediate aggregated rollup combining station statuses and real-time weather.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `timestamp` | Start of the 15-minute time window (UTC). |
 | `station_id` | Unique identifier of the station. |
@@ -68,17 +66,17 @@ This document contains descriptions, column schemas, and representative samples 
 ### Data Sample
 | timestamp | station_id | avg_bikes_available | avg_docks_available | total_renting_minutes | total_returning_minutes | temp_c | precip_mm | station_state |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-03 10:30:00.000000 | 510 | 0.0 | 22.0 | 0 | 15 | 15.15 | 0.0 | STARVED |
-| 2026-06-03 10:30:00.000000 | 511 | 0.0 | 10.0 | 0 | 15 | 15.15 | 0.0 | STARVED |
-| 2026-06-03 10:30:00.000000 | 512 | 0.0 | 15.0 | 0 | 15 | 15.15 | 0.0 | STARVED |
+| 2026-06-10 03:00:00.000000 | 1 | 1.0 | 35.0 | 15 | 15 | 16.25 | 0.1 | NORMAL |
+| 2026-06-10 03:00:00.000000 | 10 | 0.0 | 22.0 | 15 | 15 | 16.85 | 0.0 | STARVED |
+| 2026-06-10 03:00:00.000000 | 100 | 0.0 | 23.0 | 15 | 15 | 16.35 | 0.6000000000000001 | STARVED |
 
 ---
 
-## Table: `hourly_station_status`
-**Description:** Online 1-hour primary aggregated rollup table containing weather, state, and heuristic broken flags.
+## Tabla: `hourly_station_status`
+**Descripción:** Online 1-hour primary aggregated rollup table containing weather, state, and heuristic broken flags.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `hour` | Start of the 1-hour time window (UTC). |
 | `station_id` | Unique identifier of the station. |
@@ -94,23 +92,24 @@ This document contains descriptions, column schemas, and representative samples 
 ### Data Sample
 | hour | station_id | avg_bikes_available | avg_docks_available | total_renting_minutes | total_returning_minutes | is_heuristically_broken | temp_c | precip_mm | station_state |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-03 05:00:00.000000 | 1 | 1.0 | 38.0 | 70 | 70 | false | 16.5 | 0.0 | NORMAL |
-| 2026-06-03 05:00:00.000000 | 10 | 1.0 | 22.0 | 70 | 70 | false | 16.5 | 0.0 | NORMAL |
-| 2026-06-03 05:00:00.000000 | 100 | 1.0 | 21.0 | 70 | 70 | false | 16.5 | 0.0 | NORMAL |
+| 2026-06-10 03:00:00.000000 | 1 | 0.5 | 35.5 | 30 | 30 | false | 16.25 | 0.1 | STARVED |
+| 2026-06-10 03:00:00.000000 | 10 | 0.0 | 22.0 | 30 | 30 | false | 16.85 | 0.0 | STARVED |
+| 2026-06-10 03:00:00.000000 | 100 | 0.0 | 23.0 | 30 | 30 | false | 16.35 | 0.6000000000000001 | STARVED |
 
 ---
 
-## Table: `ecobici_station_info`
-**Description:** Static physical metadata for all Ecobici stations (locations, capacities, names).
+## Tabla: `ecobici_station_info`
+**Descripción:** Static physical metadata for all Ecobici stations (locations, capacities, names).
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `station_id` | Unique identifier of the station. |
 | `name` | Street name/location identifier. |
 | `capacity` | Total physical docks capacity of the station. |
 | `lat` | Latitude coordinate. |
 | `lon` | Longitude coordinate. |
+| `_updated_at` | Timestamp of the last metadata update. |
 
 ### Data Sample
 | station_id | name | lat | lon | capacity | _updated_at |
@@ -121,11 +120,11 @@ This document contains descriptions, column schemas, and representative samples 
 
 ---
 
-## Table: `trips`
-**Description:** Historical individual trip records from Ecobici, containing trip start/end times and stations.
+## Tabla: `trips`
+**Descripción:** Historical individual trip records from Ecobici, containing trip start/end times and stations.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `trip_id` | Unique identifier of the trip. |
 | `user_gender` | Gender of the user. |
@@ -138,17 +137,17 @@ This document contains descriptions, column schemas, and representative samples 
 ### Data Sample
 | user_gender | user_age | bike_id | start_station_id | end_station_id | start_timestamp | end_timestamp |
 | --- | --- | --- | --- | --- | --- | --- |
-| M | 49 | 5301262 | 137 | 015 | 2023-01-18 11:53:53.000000 | 2023-01-18 12:05:46.000000 |
-| F | 25 | 4776977 | 360 | 302 | 2023-01-18 11:45:03.000000 | 2023-01-18 12:05:48.000000 |
-| M | 31 | 6041420 | 413 | 421 | 2023-01-18 12:00:32.000000 | 2023-01-18 12:05:52.000000 |
+| F | 28 | 3556412 | 136 | 139 | 2026-04-30 23:26:51.000000 | 2026-05-01 00:00:01.000000 |
+| M | 36 | 6736532 | 77 | 150 | 2026-04-30 23:51:48.000000 | 2026-05-01 00:00:04.000000 |
+| M | 30 | 2483857 | 130 | 133 | 2026-04-30 23:57:31.000000 | 2026-05-01 00:00:04.000000 |
 
 ---
 
-## Table: `historical_station_status_15m`
-**Description:** Simulated historical 15-minute station status reconstructed using bounded flow simulation on trip records.
+## Tabla: `historical_station_status_15m`
+**Descripción:** Simulated historical 15-minute station status reconstructed using bounded flow simulation on trip records.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `timestamp` | 15-minute time window start (UTC). |
 | `station_id` | Unique identifier of the station. |
@@ -161,15 +160,19 @@ This document contains descriptions, column schemas, and representative samples 
 | `station_state` | Simulated operational state heuristic (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
 
 ### Data Sample
-*Sample data is generated dynamically after triggering the historical backfill process.*
+| timestamp | station_id | checkouts | checkins | net_delta | estimated_bikes_available | estimated_docks_available | capacity | station_state |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-05-01 00:00:00.000000 | 5 | 0 | 1 | 1 | 10.0 | 9.0 | 19 | NORMAL |
+| 2026-05-01 00:15:00.000000 | 5 | 0 | 0 | 0 | 10.0 | 9.0 | 19 | NORMAL |
+| 2026-05-01 00:30:00.000000 | 5 | 0 | 0 | 0 | 10.0 | 9.0 | 19 | NORMAL |
 
 ---
 
-## Table: `historical_station_status_1h`
-**Description:** Simulated historical 1-hour station status, aggregated from the 15-minute simulation and joined with weather data.
+## Tabla: `historical_station_status_1h`
+**Descripción:** Simulated historical 1-hour station status, aggregated from the 15-minute simulation and joined with weather data.
 
 ### Column Structure
-| Column | Description |
+| Columna | Description |
 | --- | --- |
 | `hour` | Start of the 1-hour window (UTC). |
 | `station_id` | Unique identifier of the station. |
@@ -184,4 +187,10 @@ This document contains descriptions, column schemas, and representative samples 
 | `station_state` | Aggregated simulated operational state classifier (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
 
 ### Data Sample
-*Sample data is generated dynamically after triggering the historical backfill process.*
+| hour | station_id | checkouts | checkins | net_delta | estimated_bikes_available | estimated_docks_available | capacity | temp_c | precip_mm | station_state |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-05-01 00:00:00.000000 | 11 | 0 | 2 | 2 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
+| 2026-05-01 01:00:00.000000 | 11 | 0 | 0 | 0 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
+| 2026-05-01 02:00:00.000000 | 11 | 0 | 0 | 0 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
+
+---

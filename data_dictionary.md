@@ -3,65 +3,65 @@
 Este documento contiene la descripción, los campos y una muestra representativa de cada una de las tablas disponibles en el Datalake de Ecobici (`ecobici_lake`).
 
 ## Tabla: `raw_station_status`
-**Descripción:** 5-minute raw bike and dock availability snapshots ingested directly from the Ecobici GBFS feed.
+**Descripción:** Muestras crudas de disponibilidad de bicis y puertos cada 5 minutos obtenidas directamente de la API GBFS de Ecobici.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `timestamp` | Timestamp of the observation (UTC). |
-| `station_id` | Unique identifier of the station. |
-| `bikes_available` | Number of functional bikes currently at the station. |
-| `docks_available` | Number of free docks currently at the station. |
-| `is_renting` | Boolean flag indicating if renting bikes is enabled. |
-| `is_returning` | Boolean flag indicating if returning bikes is enabled. |
-| `_ingest_at` | Timestamp when the record was ingested by the Lambda function. |
-| `station_state` | Operational state heuristic at the moment of ingestion (NORMAL, STARVED, OVERFLOW). |
+| `timestamp` | Marca de tiempo de la observación (UTC). |
+| `station_id` | Identificador único de la estación. |
+| `bikes_available` | Número de bicicletas funcionales disponibles en la estación. |
+| `docks_available` | Número de puertos libres disponibles en la estación. |
+| `is_renting` | Indica si la renta de bicicletas está activa. |
+| `is_returning` | Indica si el retorno de bicicletas está activo. |
+| `_ingest_at` | Marca de tiempo en la que la función Lambda procesó el registro. |
+| `station_state` | Heurística del estado operativo en el momento de la ingesta (NORMAL, STARVED, OVERFLOW). |
 
 ### Muestra de Datos (Sample)
 | timestamp | station_id | bikes_available | docks_available | is_renting | is_returning | _ingest_at | station_state |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-09 21:31:50.000000 | 1 | 10 | 25 | true | true | 2026-06-09 21:31:50.000000 |  |
-| 2026-06-09 21:31:50.000000 | 5 | 0 | 19 | true | true | 2026-06-09 21:31:50.000000 |  |
-| 2026-06-09 21:31:50.000000 | 6 | 3 | 22 | true | true | 2026-06-09 21:31:50.000000 |  |
+| 2026-06-09 18:41:50.000000 | 1 | 8 | 28 | true | true | 2026-06-09 18:41:50.000000 |  |
+| 2026-06-09 18:41:50.000000 | 5 | 4 | 15 | true | true | 2026-06-09 18:41:50.000000 |  |
+| 2026-06-09 18:41:50.000000 | 6 | 3 | 22 | true | true | 2026-06-09 18:41:50.000000 |  |
 
 ---
 
 ## Tabla: `weather_observations`
-**Descripción:** Real-time weather observations ingested every 15 minutes from Open-Meteo current endpoint.
+**Descripción:** Observaciones climáticas en tiempo real ingeridas cada 15 minutos desde el endpoint 'current' de Open-Meteo.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `timestamp` | Timestamp of the weather observation (UTC). |
-| `station_id` | Unique identifier of the nearest Ecobici station. |
-| `temp_c` | Temperature in Celsius. |
-| `precip_mm` | Precipitation in millimeters. |
-| `_is_filled` | Boolean indicating if the observation was backfilled/imputed. |
+| `timestamp` | Marca de tiempo de la observación climática (UTC). |
+| `station_id` | Identificador de la estación de Ecobici más cercana a las coordenadas. |
+| `temp_c` | Temperatura en grados Celsius. |
+| `precip_mm` | Precipitación en milímetros. |
+| `_is_filled` | Indica si el registro es imputado o de respaldo. |
 
 ### Muestra de Datos (Sample)
 | timestamp | station_id | temp_c | precip_mm | _is_filled |
 | --- | --- | --- | --- | --- |
-| 2026-06-07 22:07:07.000000 | 1 | 18.7 | 2.1 | false |
-| 2026-06-07 22:07:07.000000 | 5 | 18.9 | 2.5 | false |
-| 2026-06-07 22:07:07.000000 | 6 | 18.9 | 2.5 | false |
+| 2026-06-08 13:07:07.000000 | 1 | 15.2 | 0.0 | false |
+| 2026-06-08 13:07:07.000000 | 5 | 15.5 | 0.0 | false |
+| 2026-06-08 13:07:07.000000 | 6 | 15.5 | 0.0 | false |
 
 ---
 
 ## Tabla: `station_status_15m`
-**Descripción:** Online 15-minute intermediate aggregated rollup combining station statuses and real-time weather.
+**Descripción:** Agregaciones en ventanas de 15 minutos combinando estado de la estación y clima en tiempo real.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `timestamp` | Start of the 15-minute time window (UTC). |
-| `station_id` | Unique identifier of the station. |
-| `avg_bikes_available` | Average number of bikes available during the 15-minute slot. |
-| `avg_docks_available` | Average number of docks available during the 15-minute slot. |
-| `total_renting_minutes` | Approximate duration (minutes) the station was renting bikes in this slot. |
-| `total_returning_minutes` | Approximate duration (minutes) the station was accepting returns in this slot. |
-| `temp_c` | Average temperature in Celsius during this time slot. |
-| `precip_mm` | Average precipitation in millimeters during this time slot. |
-| `station_state` | Aggregated operational state heuristic (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
+| `timestamp` | Inicio de la ventana de 15 minutos (UTC). |
+| `station_id` | Identificador único de la estación. |
+| `avg_bikes_available` | Promedio de bicicletas disponibles durante la ventana de 15 minutos. |
+| `avg_docks_available` | Promedio de puertos disponibles durante la ventana de 15 minutos. |
+| `total_renting_minutes` | Minutos aproximados que la estación estuvo activa para renta. |
+| `total_returning_minutes` | Minutos aproximados que la estación estuvo activa para retornos. |
+| `temp_c` | Temperatura promedio en Celsius durante el intervalo. |
+| `precip_mm` | Precipitación promedio en milímetros durante el intervalo. |
+| `station_state` | Estado operativo consolidado (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
 
 ### Muestra de Datos (Sample)
 | timestamp | station_id | avg_bikes_available | avg_docks_available | total_renting_minutes | total_returning_minutes | temp_c | precip_mm | station_state |
@@ -73,42 +73,43 @@ Este documento contiene la descripción, los campos y una muestra representativa
 ---
 
 ## Tabla: `hourly_station_status`
-**Descripción:** Online 1-hour primary aggregated rollup table containing weather, state, and heuristic broken flags.
+**Descripción:** Agregación por hora para analítica que incluye variables climatológicas y banderas de error.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `hour` | Start of the 1-hour time window (UTC). |
-| `station_id` | Unique identifier of the station. |
-| `avg_bikes_available` | Average number of bikes available during the hour. |
-| `avg_docks_available` | Average number of docks available during the hour. |
-| `total_renting_minutes` | Total active renting duration during the hour. |
-| `total_returning_minutes` | Total active returning duration during the hour. |
-| `is_heuristically_broken` | Boolean flag indicating if a station had 0 activity or constant status suggesting connectivity/sensor failure. |
-| `temp_c` | Average temperature in Celsius during the hour. |
-| `precip_mm` | Average precipitation in millimeters during the hour. |
-| `station_state` | Operational state classifier (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE, BROKEN). |
+| `hour` | Inicio de la hora agregada (UTC). |
+| `station_id` | Identificador único de la estación. |
+| `avg_bikes_available` | Promedio de bicicletas disponibles durante la hora. |
+| `avg_docks_available` | Promedio de puertos disponibles durante la hora. |
+| `total_renting_minutes` | Duración total (minutos) de renta activa durante la hora. |
+| `total_returning_minutes` | Duración total (minutos) de retorno activo durante la hora. |
+| `is_heuristically_broken` | Banderas que identifica estaciones sin cambios en el estado (posible falla de red/sensor). |
+| `temp_c` | Temperatura promedio en Celsius durante la hora. |
+| `precip_mm` | Precipitación promedio en milímetros durante la hora. |
+| `station_state` | Estado operativo consolidado final (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE, BROKEN). |
 
 ### Muestra de Datos (Sample)
 | hour | station_id | avg_bikes_available | avg_docks_available | total_renting_minutes | total_returning_minutes | is_heuristically_broken | temp_c | precip_mm | station_state |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 2026-06-03 05:00:00.000000 | 1 | 1.0 | 38.0 | 70 | 70 | false |  | 0.0 | NORMAL |
-| 2026-06-03 05:00:00.000000 | 10 | 1.0 | 22.0 | 70 | 70 | false |  | 0.0 | NORMAL |
-| 2026-06-03 05:00:00.000000 | 100 | 1.0 | 21.0 | 70 | 70 | false |  | 0.0 | NORMAL |
+| 2026-06-10 03:00:00.000000 | 1 | 0.5 | 35.5 | 30 | 30 | false | 16.25 | 0.1 | STARVED |
+| 2026-06-10 03:00:00.000000 | 10 | 0.0 | 22.0 | 30 | 30 | false | 16.85 | 0.0 | STARVED |
+| 2026-06-10 03:00:00.000000 | 100 | 0.0 | 23.0 | 30 | 30 | false | 16.35 | 0.6000000000000001 | STARVED |
 
 ---
 
 ## Tabla: `ecobici_station_info`
-**Descripción:** Static physical metadata for all Ecobici stations (locations, capacities, names).
+**Descripción:** Catálogo físico y metadatos estáticos de las estaciones de Ecobici.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `station_id` | Unique identifier of the station. |
-| `name` | Street name/location identifier. |
-| `capacity` | Total physical docks capacity of the station. |
-| `lat` | Latitude coordinate. |
-| `lon` | Longitude coordinate. |
+| `station_id` | Identificador único de la estación. |
+| `name` | Nombre físico de la estación (calles/ubicación). |
+| `capacity` | Capacidad total física de puertos (docks). |
+| `lat` | Coordenada de latitud. |
+| `lon` | Coordenada de longitud. |
+| `_updated_at` | Última fecha de actualización del catálogo. |
 
 ### Muestra de Datos (Sample)
 | station_id | name | lat | lon | capacity | _updated_at |
@@ -120,70 +121,76 @@ Este documento contiene la descripción, los campos y una muestra representativa
 ---
 
 ## Tabla: `trips`
-**Descripción:** Historical individual trip records from Ecobici, containing trip start/end times and stations.
+**Descripción:** Historial de viajes individuales de Ecobici utilizado para simulaciones y modelado predictivo.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `trip_id` | Unique identifier of the trip. |
-| `user_gender` | Gender of the user. |
-| `user_age` | Age of the user. |
-| `start_timestamp` | Start timestamp of the trip (UTC). |
-| `start_station_id` | ID of the station where the trip started. |
-| `end_timestamp` | End timestamp of the trip (UTC). |
-| `end_station_id` | ID of the station where the trip ended. |
+| `trip_id` | ID único del viaje. |
+| `user_gender` | Género del usuario. |
+| `user_age` | Edad del usuario. |
+| `start_timestamp` | Marca de tiempo de inicio del viaje (UTC). |
+| `start_station_id` | ID de la estación de origen. |
+| `end_timestamp` | Marca de tiempo de término del viaje (UTC). |
+| `end_station_id` | ID de la estación de destino. |
 
 ### Muestra de Datos (Sample)
 | user_gender | user_age | bike_id | start_station_id | end_station_id | start_timestamp | end_timestamp |
 | --- | --- | --- | --- | --- | --- | --- |
-| M | 49 | 5301262 | 137 | 015 | 2023-01-18 11:53:53.000000 | 2023-01-18 12:05:46.000000 |
-| F | 25 | 4776977 | 360 | 302 | 2023-01-18 11:45:03.000000 | 2023-01-18 12:05:48.000000 |
-| M | 31 | 6041420 | 413 | 421 | 2023-01-18 12:00:32.000000 | 2023-01-18 12:05:52.000000 |
+| F | 24 | 8293276 | 126 | 547 | 2024-01-31 23:34:37.000000 | 2024-02-01 00:00:03.000000 |
+| M | 27 | 5494331 | 499 | 495 | 2024-01-31 23:55:28.000000 | 2024-02-01 00:00:04.000000 |
+| M | 33 | 2714178 | 116 | 495 | 2024-01-31 23:41:59.000000 | 2024-02-01 00:00:08.000000 |
 
 ---
 
 ## Tabla: `historical_station_status_15m`
-**Descripción:** Simulated historical 15-minute station status reconstructed using bounded flow simulation on trip records.
+**Descripción:** Disponibilidad histórica agregada cada 15 minutos reconstruida mediante simulación de flujos de viajes.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `timestamp` | 15-minute time window start (UTC). |
-| `station_id` | Unique identifier of the station. |
-| `checkouts` | Number of trip checkouts during this 15-minute interval. |
-| `checkins` | Number of trip checkins during this 15-minute interval. |
-| `net_delta` | Net flow change of bikes (checkins - checkouts). |
-| `estimated_bikes_available` | Estimated number of bikes available at the station. |
-| `estimated_docks_available` | Estimated number of docks available at the station. |
-| `capacity` | Physical capacity of the station. |
-| `station_state` | Simulated operational state heuristic (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
+| `timestamp` | Inicio de la ventana de 15 minutos simulada (UTC). |
+| `station_id` | Identificador único de la estación. |
+| `checkouts` | Viajes iniciados (salidas) en el intervalo. |
+| `checkins` | Viajes finalizados (llegadas) en el intervalo. |
+| `net_delta` | Diferencia neta de flujo (entradas - salidas). |
+| `estimated_bikes_available` | Estimación del total de bicicletas disponibles. |
+| `estimated_docks_available` | Estimación del total de puertos libres disponibles. |
+| `capacity` | Capacidad total de la estación. |
+| `station_state` | Estado operativo simulado (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
 
 ### Muestra de Datos (Sample)
-*No se pudo recuperar la muestra para esta tabla en este momento.*
-
+| timestamp | station_id | checkouts | checkins | net_delta | estimated_bikes_available | estimated_docks_available | capacity | station_state |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-05-01 00:00:00.000000 | 5 | 0 | 1 | 1 | 10.0 | 9.0 | 19 | NORMAL |
+| 2026-05-01 00:15:00.000000 | 5 | 0 | 0 | 0 | 10.0 | 9.0 | 19 | NORMAL |
+| 2026-05-01 00:30:00.000000 | 5 | 0 | 0 | 0 | 10.0 | 9.0 | 19 | NORMAL |
 
 ---
 
 ## Tabla: `historical_station_status_1h`
-**Descripción:** Simulated historical 1-hour station status, aggregated from the 15-minute simulation and joined with weather data.
+**Descripción:** Disponibilidad histórica simulada agregada por hora y combinada con el histórico de clima.
 
 ### Estructura de Columnas
 | Columna | Significado / Descripción |
 | --- | --- |
-| `hour` | Start of the 1-hour window (UTC). |
-| `station_id` | Unique identifier of the station. |
-| `checkouts` | Total trip checkouts during the hour. |
-| `checkins` | Total trip checkins during the hour. |
-| `net_delta` | Net flow change of bikes (checkins - checkouts). |
-| `estimated_bikes_available` | Estimated average number of bikes available. |
-| `estimated_docks_available` | Estimated average number of docks available. |
-| `capacity` | Physical capacity of the station. |
-| `temp_c` | Imputed temperature in Celsius. |
-| `precip_mm` | Imputed precipitation in millimeters. |
-| `station_state` | Aggregated simulated operational state classifier (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
+| `hour` | Inicio de la hora simulada (UTC). |
+| `station_id` | Identificador único de la estación. |
+| `checkouts` | Viajes iniciados totales durante la hora. |
+| `checkins` | Viajes terminados totales durante la hora. |
+| `net_delta` | Flujo neto de la estación durante la hora. |
+| `estimated_bikes_available` | Promedio estimado de bicicletas disponibles. |
+| `estimated_docks_available` | Promedio estimado de puertos disponibles. |
+| `capacity` | Capacidad total de la estación. |
+| `temp_c` | Temperatura en grados Celsius. |
+| `precip_mm` | Precipitación en milímetros. |
+| `station_state` | Estado simulado por hora consolidado (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE). |
 
 ### Muestra de Datos (Sample)
-*No se pudo recuperar la muestra para esta tabla en este momento.*
-
+| hour | station_id | checkouts | checkins | net_delta | estimated_bikes_available | estimated_docks_available | capacity | temp_c | precip_mm | station_state |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-05-01 00:00:00.000000 | 11 | 0 | 2 | 2 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
+| 2026-05-01 01:00:00.000000 | 11 | 0 | 0 | 0 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
+| 2026-05-01 02:00:00.000000 | 11 | 0 | 0 | 0 | 14.0 | 13.0 | 27 |  | 0.0 | NORMAL |
 
 ---
