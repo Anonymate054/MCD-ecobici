@@ -25,6 +25,7 @@ import logging
 import os
 import urllib.error
 import urllib.request
+import time
 from datetime import datetime, timezone
 from typing import Any
 
@@ -54,8 +55,8 @@ FORWARD_FILL_MAX_SLOTS = 1   # 1 × 1-hour slot = 1 hour max forward-fill
 OPEN_METEO_URL = (
     "https://api.open-meteo.com/v1/forecast"
     "?latitude={lats}&longitude={lons}"
-    "&current=temperature_2m,precipitation,relative_humidity_2m,wind_speed_10m"
-    "&timezone=America%2FMexico_City"
+    "&hourly=temperature_2m,precipitation"
+    "&timezone=UTC"
     "&forecast_days=1"
 )
 
@@ -119,34 +120,71 @@ def _load_station_coords() -> list[dict]:
 
 def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
     """
-    Batch-fetch current weather from Open-Meteo for all Ecobici stations.
+    Batch-fetch hourly weather from Open-Meteo for all Ecobici stations.
     Returns a flat list of raw observation dicts matching the internal schema.
     """
     observations = []
 
+    # Round ingest_ts (UTC, e.g. "2026-06-07T03:07:12Z") to current hour
+    # e.g. "2026-06-07T03:00"
+    dt_utc = datetime.strptime(ingest_ts, "%Y-%m-%dT%H:%M:%SZ")
+    target_time_str = dt_utc.strftime("%Y-%m-%dT%H:00")
+
     for i in range(0, len(stations), OPEN_METEO_BATCH_SIZE):
+        # Prevent bursting requests and trigger rate limiters (pacing delay)
+        if i > 0:
+            time.sleep(1.0)
+
         batch = stations[i : i + OPEN_METEO_BATCH_SIZE]
         lats  = ",".join(str(s["lat"])        for s in batch)
         lons  = ",".join(str(s["lon"])        for s in batch)
         url   = OPEN_METEO_URL.format(lats=lats, lons=lons)
 
-        try:
-            data = _http_get(url)
-        except Exception as exc:  # noqa: BLE001
-            logger.warning("Open-Meteo batch %d failed: %s", i // OPEN_METEO_BATCH_SIZE, exc)
+        data = None
+        max_retries = 5
+        backoff = 2
+        for attempt in range(max_retries):
+            try:
+                data = _http_get(url)
+                break
+            except Exception as exc:
+                if attempt == max_retries - 1:
+                    logger.error("Open-Meteo batch %d failed after %d attempts: %s", 
+                                 i // OPEN_METEO_BATCH_SIZE, max_retries, exc)
+                else:
+                    sleep_time = backoff ** attempt
+                    logger.warning("Open-Meteo batch %d failed (attempt %d/%d): %s. Retrying in %d seconds...", 
+                                   i // OPEN_METEO_BATCH_SIZE, attempt + 1, max_retries, exc, sleep_time)
+                    time.sleep(sleep_time)
+
+        if not data:
+            logger.warning("Skipping batch starting at index %d due to API failures", i)
             continue
 
-        # Open-Meteo returns a list when multiple coordinates are requested
         if isinstance(data, dict):
             data = [data]
 
         for j, item in enumerate(data):
-            cur = item.get("current", {})
+            hourly = item.get("hourly", {})
+            times = hourly.get("time", [])
+
+            try:
+                idx = times.index(target_time_str)
+            except ValueError:
+                idx = -1
+
+            if idx != -1:
+                temp_c = hourly.get("temperature_2m", [])[idx]
+                precip = hourly.get("precipitation", [])[idx]
+            else:
+                temp_c = None
+                precip = 0.0
+
             observations.append({
                 "timestamp":  ingest_ts,
                 "station_id": str(batch[j]["station_id"]),
-                "temp_c":     cur.get("temperature_2m"),
-                "precip_mm":  cur.get("precipitation", 0.0),
+                "temp_c":     temp_c,
+                "precip_mm":  precip,
                 "_is_filled": False,
             })
 
