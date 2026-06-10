@@ -182,6 +182,7 @@ CREATE EXTERNAL TABLE {staging} (
     docks_available  INT,
     is_renting       BOOLEAN,
     is_returning     BOOLEAN,
+    station_state    STRING,
     ingest_at        STRING
 )
 ROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'
@@ -220,7 +221,8 @@ SELECT
     docks_available,
     is_renting,
     is_returning,
-    CAST(from_iso8601_timestamp(ingest_at)  AS TIMESTAMP) AS _ingest_at
+    CAST(from_iso8601_timestamp(ingest_at)  AS TIMESTAMP) AS _ingest_at,
+    station_state
 FROM {staging}
 WHERE station_id IS NOT NULL
   AND station_id != ''
@@ -345,9 +347,117 @@ WHERE station_id IS NOT NULL AND station_id != ''
 # Step 3 — Incremental rollup → hourly_station_status Iceberg
 # ---------------------------------------------------------------------------
 
+def _run_rollup_15m() -> dict:
+    """
+    Incremental 15-minute rollup: aggregate the last 3 hours of raw station_status
+    into station_status_15m.
+    """
+    t0 = time.monotonic()
+    try:
+        _run_query("""
+INSERT INTO station_status_15m
+WITH
+raw AS (
+    SELECT
+        date_add('minute', -(minute("timestamp") % 15), date_trunc('minute', "timestamp")) AS interval_start,
+        station_id,
+        bikes_available,
+        docks_available,
+        is_renting,
+        is_returning,
+        "timestamp"
+    FROM raw_station_status
+    WHERE "timestamp" >= DATE_ADD('hour', -3, NOW())
+),
+raw_deltas AS (
+    SELECT
+        interval_start,
+        station_id,
+        bikes_available,
+        bikes_available - LAG(bikes_available, 1) OVER (PARTITION BY station_id ORDER BY "timestamp" ASC) AS delta
+    FROM raw
+),
+rebalance_detect AS (
+    SELECT
+        interval_start,
+        station_id,
+        MAX(CASE WHEN delta >= 5 THEN 1 ELSE 0 END) AS has_refill,
+        MAX(CASE WHEN delta <= -5 THEN 1 ELSE 0 END) AS has_deplete
+    FROM raw_deltas
+    GROUP BY 1, 2
+),
+interval_agg AS (
+    SELECT
+        interval_start,
+        station_id,
+        ROUND(AVG(CAST(bikes_available AS DOUBLE)), 2) AS avg_bikes_available,
+        ROUND(AVG(CAST(docks_available AS DOUBLE)), 2) AS avg_docks_available,
+        SUM(CASE WHEN is_renting THEN 5 ELSE 0 END) AS total_renting_minutes,
+        SUM(CASE WHEN is_returning THEN 5 ELSE 0 END) AS total_returning_minutes
+    FROM raw
+    GROUP BY 1, 2
+),
+weather_hourly AS (
+    SELECT
+        date_trunc('hour', "timestamp") AS hour,
+        station_id,
+        AVG(temp_c)    AS temp_c,
+        AVG(precip_mm) AS precip_mm
+    FROM weather_observations
+    WHERE _is_filled = FALSE
+      AND "timestamp" >= DATE_ADD('hour', -3, NOW())
+    GROUP BY 1, 2
+),
+new_intervals AS (
+    SELECT DISTINCT i.interval_start, i.station_id
+    FROM interval_agg i
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM station_status_15m s
+        WHERE s.timestamp  = i.interval_start
+          AND s.station_id = i.station_id
+    )
+)
+SELECT
+    i.interval_start AS timestamp,
+    i.station_id,
+    i.avg_bikes_available,
+    i.avg_docks_available,
+    i.total_renting_minutes,
+    i.total_returning_minutes,
+    w.temp_c,
+    COALESCE(w.precip_mm, 0.0) AS precip_mm,
+    CASE 
+        WHEN COALESCE(rd.has_refill, 0) = 1 THEN 'REBALANCED_REFILL'
+        WHEN COALESCE(rd.has_deplete, 0) = 1 THEN 'REBALANCED_DEPLETE'
+        WHEN i.avg_bikes_available = 0 THEN 'STARVED'
+        WHEN i.avg_docks_available = 0 THEN 'OVERFLOW'
+        ELSE 'NORMAL'
+    END AS station_state
+FROM interval_agg i
+JOIN new_intervals n
+    ON n.interval_start = i.interval_start AND n.station_id = i.station_id
+LEFT JOIN rebalance_detect rd
+    ON rd.interval_start = i.interval_start AND rd.station_id = i.station_id
+LEFT JOIN weather_hourly w
+    ON  w.hour       = date_trunc('hour', i.interval_start)
+    AND w.station_id = i.station_id
+ORDER BY i.interval_start, i.station_id
+""",                "rollup_15m:insert")
+        duration_ms = (time.monotonic() - t0) * 1000
+        _publish_metric("rollup_15m", 0, duration_ms, success=True)
+        logger.info("rollup_15m: SUCCEEDED (%.1fs)", duration_ms / 1000)
+        return {"operation": "rollup_15m", "status": "success", "duration_ms": round(duration_ms)}
+    except Exception as exc:  # noqa: BLE001
+        duration_ms = (time.monotonic() - t0) * 1000
+        _publish_metric("rollup_15m", 0, duration_ms, success=False)
+        logger.error("rollup_15m failed: %s", exc, exc_info=True)
+        return {"operation": "rollup_15m", "status": "failed", "error": str(exc)}
+
+
 def _run_rollup() -> dict:
     """
-    Incremental rollup: aggregate the last 3 hours of raw station_status +
+    Incremental rollup: aggregate the last 3 hours of station_status_15m +
     weather_observations into hourly_station_status.
     Uses a 3-hour window to handle partial hours and Firehose lag.
     """
@@ -356,37 +466,44 @@ def _run_rollup() -> dict:
         _run_query("""
 INSERT INTO hourly_station_status
 WITH
-raw AS (
+raw_15m AS (
     SELECT
         date_trunc('hour', "timestamp")      AS hour,
         station_id,
-        bikes_available,
-        docks_available,
-        is_renting,
-        is_returning,
+        avg_bikes_available,
+        avg_docks_available,
+        total_renting_minutes,
+        total_returning_minutes,
+        station_state,
         (EXTRACT(HOUR FROM "timestamp" AT TIME ZONE 'America/Mexico_City')
             BETWEEN 7 AND 20)               AS is_peak_hour
-    FROM raw_station_status
+    FROM station_status_15m
     WHERE "timestamp" >= DATE_ADD('hour', -3, NOW())
 ),
 hourly_agg AS (
     SELECT
         hour, station_id,
-        ROUND(AVG(CAST(bikes_available AS DOUBLE)), 2)  AS avg_bikes_available,
-        ROUND(AVG(CAST(docks_available AS DOUBLE)), 2)  AS avg_docks_available,
-        SUM(CASE WHEN is_renting   THEN 5 ELSE 0 END)  AS total_renting_minutes,
-        SUM(CASE WHEN is_returning THEN 5 ELSE 0 END)  AS total_returning_minutes,
-        BOOL_AND(NOT is_renting AND NOT is_returning)  AS native_malfunction,
-        STDDEV(CAST(bikes_available AS DOUBLE))         AS bikes_stddev,
-        AVG(CAST(bikes_available  AS DOUBLE))           AS avg_bikes,
-        MAX(CASE WHEN is_peak_hour THEN 1 ELSE 0 END)  AS during_peak
-    FROM raw
+        ROUND(AVG(avg_bikes_available), 2)  AS avg_bikes_available,
+        ROUND(AVG(avg_docks_available), 2)  AS avg_docks_available,
+        SUM(total_renting_minutes)          AS total_renting_minutes,
+        SUM(total_returning_minutes)        AS total_returning_minutes,
+        STDDEV(avg_bikes_available)         AS bikes_stddev,
+        AVG(avg_bikes_available)            AS avg_bikes,
+        MAX(CASE WHEN is_peak_hour THEN 1 ELSE 0 END)  AS during_peak,
+        CASE 
+            WHEN SUM(CASE WHEN station_state = 'REBALANCED_REFILL' THEN 1 ELSE 0 END) > 0 THEN 'REBALANCED_REFILL'
+            WHEN SUM(CASE WHEN station_state = 'REBALANCED_DEPLETE' THEN 1 ELSE 0 END) > 0 THEN 'REBALANCED_DEPLETE'
+            WHEN SUM(CASE WHEN station_state = 'STARVED' THEN 1 ELSE 0 END) > 0 THEN 'STARVED'
+            WHEN SUM(CASE WHEN station_state = 'OVERFLOW' THEN 1 ELSE 0 END) > 0 THEN 'OVERFLOW'
+            ELSE 'NORMAL'
+        END AS raw_state
+    FROM raw_15m
     GROUP BY 1, 2
 ),
 frozen_window AS (
     SELECT
         hour, station_id,
-        avg_bikes, bikes_stddev, during_peak, native_malfunction,
+        avg_bikes, bikes_stddev, during_peak, raw_state,
         avg_bikes_available, avg_docks_available,
         total_renting_minutes, total_returning_minutes,
         LAG(bikes_stddev, 1) OVER (PARTITION BY station_id ORDER BY hour) AS stddev_lag1,
@@ -401,7 +518,7 @@ flagged AS (
         avg_bikes_available, avg_docks_available,
         total_renting_minutes, total_returning_minutes,
         (
-            native_malfunction
+            (total_renting_minutes = 0 AND total_returning_minutes = 0)
             OR (
                 during_peak = 1
                 AND avg_bikes    > 0
@@ -411,7 +528,8 @@ flagged AS (
                 AND avg_bikes_lag1 IS NOT NULL
                 AND avg_bikes_lag2 IS NOT NULL
             )
-        ) AS is_heuristically_broken
+        ) AS is_heuristically_broken,
+        raw_state
     FROM frozen_window
 ),
 weather_hourly AS (
@@ -419,7 +537,7 @@ weather_hourly AS (
         date_trunc('hour', "timestamp") AS hour,
         station_id,
         AVG(temp_c)    AS temp_c,
-        SUM(precip_mm) AS precip_mm
+        AVG(precip_mm) AS precip_mm
     FROM weather_observations
     WHERE _is_filled = FALSE
       AND "timestamp" >= DATE_ADD('hour', -3, NOW())
@@ -444,7 +562,11 @@ SELECT
     f.total_returning_minutes,
     f.is_heuristically_broken,
     w.temp_c,
-    COALESCE(w.precip_mm, 0.0) AS precip_mm
+    COALESCE(w.precip_mm, 0.0) AS precip_mm,
+    CASE 
+        WHEN f.is_heuristically_broken THEN 'BROKEN'
+        ELSE f.raw_state
+    END AS station_state
 FROM flagged f
 JOIN new_hours n
     ON n.hour = f.hour AND n.station_id = f.station_id
@@ -453,12 +575,10 @@ LEFT JOIN weather_hourly w
     AND w.station_id = f.station_id
 ORDER BY f.hour, f.station_id
 """,                "rollup:insert")
-
         duration_ms = (time.monotonic() - t0) * 1000
         _publish_metric("rollup", 0, duration_ms, success=True)
         logger.info("rollup: SUCCEEDED (%.1fs)", duration_ms / 1000)
         return {"operation": "rollup", "status": "success", "duration_ms": round(duration_ms)}
-
     except Exception as exc:  # noqa: BLE001
         duration_ms = (time.monotonic() - t0) * 1000
         _publish_metric("rollup", 0, duration_ms, success=False)
@@ -491,7 +611,13 @@ def handler(event: Any, context: Any) -> dict:
     if r["status"] == "failed":
         failures += 1
 
-    # Step 3: hourly rollup (only if step 1 loaded new data or status was skipped with recent data)
+    # Step 3: 15-minute rollup
+    r = _run_rollup_15m()
+    results.append(r)
+    if r["status"] == "failed":
+        failures += 1
+
+    # Step 4: hourly rollup
     r = _run_rollup()
     results.append(r)
     if r["status"] == "failed":

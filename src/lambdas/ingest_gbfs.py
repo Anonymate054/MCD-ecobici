@@ -106,13 +106,25 @@ def _build_status_records(stations: list[dict], ingest_ts: str) -> list[dict]:
     """Normalise raw GBFS station_status data into the target schema."""
     records = []
     for s in stations:
+        bikes = int(s.get("num_bikes_available", 0))
+        docks = int(s.get("num_docks_available", 0))
+        
+        # Heuristic rules to determine current state of the station
+        if bikes == 0:
+            state = "STARVED"
+        elif docks == 0:
+            state = "OVERFLOW"
+        else:
+            state = "NORMAL"
+
         records.append({
             "timestamp":       ingest_ts,
             "station_id":      str(s.get("station_id", "")),
-            "bikes_available": int(s.get("num_bikes_available", 0)),
-            "docks_available": int(s.get("num_docks_available", 0)),
+            "bikes_available": bikes,
+            "docks_available": docks,
             "is_renting":      bool(s.get("is_renting", False)),
             "is_returning":    bool(s.get("is_returning", False)),
+            "station_state":   state,
             "_ingest_at":      ingest_ts,
         })
     return records

@@ -75,6 +75,11 @@ resource "aws_glue_catalog_table" "raw_station_status" {
       type    = "timestamp"
       comment = "Lambda processing timestamp"
     }
+    columns {
+      name    = "station_state"
+      type    = "string"
+      comment = "Station operational state (NORMAL, STARVED, OVERFLOW)"
+    }
   }
 }
 
@@ -256,6 +261,84 @@ resource "aws_glue_catalog_table" "hourly_station_status" {
       type    = "double"
       comment = "Nearest weather station precipitation"
     }
+    columns {
+      name    = "station_state"
+      type    = "string"
+      comment = "Station operational state (NORMAL, STARVED, OVERFLOW, BROKEN, REBALANCED_REFILL, REBALANCED_DEPLETE)"
+    }
+  }
+}
+
+
+# --- 4.5 station_status_15m ---------------------------------------------------
+
+resource "aws_glue_catalog_table" "station_status_15m" {
+  name          = "station_status_15m"
+  database_name = aws_glue_catalog_database.ecobici.name
+  description   = "15-minute online station status rollup aggregated from raw_station_status."
+  table_type    = "EXTERNAL_TABLE"
+
+  open_table_format_input {
+    iceberg_input {
+      metadata_operation = "CREATE"
+      version            = "2"
+    }
+  }
+
+  storage_descriptor {
+    location      = "s3://${var.s3_bucket_name}/processed/station_status_15m/"
+    input_format  = "org.apache.iceberg.mr.mapred.IcebergInputFormat"
+    output_format = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+
+    ser_de_info {
+      serialization_library = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+    }
+
+    columns {
+      name    = "timestamp"
+      type    = "timestamp"
+      comment = "Truncated to 15-minute interval (UTC)"
+    }
+    columns {
+      name    = "station_id"
+      type    = "string"
+      comment = "Ecobici station identifier"
+    }
+    columns {
+      name    = "avg_bikes_available"
+      type    = "double"
+      comment = "Average bikes available during the 15-minute interval"
+    }
+    columns {
+      name    = "avg_docks_available"
+      type    = "double"
+      comment = "Average docks available during the 15-minute interval"
+    }
+    columns {
+      name    = "total_renting_minutes"
+      type    = "int"
+      comment = "Minutes in the interval where is_renting=true"
+    }
+    columns {
+      name    = "total_returning_minutes"
+      type    = "int"
+      comment = "Minutes in the interval where is_returning=true"
+    }
+    columns {
+      name    = "temp_c"
+      type    = "double"
+      comment = "Nearest weather station temperature"
+    }
+    columns {
+      name    = "precip_mm"
+      type    = "double"
+      comment = "Nearest weather station precipitation"
+    }
+    columns {
+      name    = "station_state"
+      type    = "string"
+      comment = "Estimated station operational state (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE)"
+    }
   }
 }
 
@@ -322,6 +405,11 @@ resource "aws_glue_catalog_table" "historical_station_status_15m" {
       name    = "capacity"
       type    = "int"
       comment = "Physical bike capacity of the station"
+    }
+    columns {
+      name    = "station_state"
+      type    = "string"
+      comment = "Estimated station operational state (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE)"
     }
   }
 }
@@ -399,6 +487,11 @@ resource "aws_glue_catalog_table" "historical_station_status_1h" {
       name    = "precip_mm"
       type    = "double"
       comment = "Total hourly precipitation in mm"
+    }
+    columns {
+      name    = "station_state"
+      type    = "string"
+      comment = "Estimated hourly operational state (NORMAL, STARVED, OVERFLOW, REBALANCED_REFILL, REBALANCED_DEPLETE)"
     }
   }
 }

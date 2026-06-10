@@ -398,8 +398,8 @@ resource "aws_lambda_permission" "eventbridge_invoke_ingest_gbfs" {
 
 resource "aws_cloudwatch_event_rule" "ingest_weather_schedule" {
   name                = "${var.project_prefix}-ingest-weather-schedule"
-  description         = "Trigger ingest_weather Lambda every 1 hour."
-  schedule_expression = "rate(1 hour)"
+  description         = "Trigger ingest_weather Lambda every 15 minutes."
+  schedule_expression = "rate(15 minutes)"
   state               = "ENABLED"
 
   tags = { Name = "${var.project_prefix}-ingest-weather-schedule" }

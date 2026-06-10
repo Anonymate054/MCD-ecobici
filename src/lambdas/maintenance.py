@@ -52,6 +52,7 @@ MANAGED_TABLES = [
     "raw_station_status",
     "ecobici_station_info",
     "weather_observations",
+    "station_status_15m",
     "hourly_station_status",
 ]
 

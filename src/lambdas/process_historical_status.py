@@ -128,7 +128,8 @@ def handler(event: Any, context: Any) -> dict:
         net_delta                 INT,
         estimated_bikes_available DOUBLE,
         estimated_docks_available DOUBLE,
-        capacity                  INT
+        capacity                  INT,
+        station_state             STRING
     )
     PARTITIONED BY (month(timestamp))
     LOCATION 's3://{S3_BUCKET}/processed/historical_station_status_15m/'
@@ -150,7 +151,8 @@ def handler(event: Any, context: Any) -> dict:
         estimated_docks_available DOUBLE,
         capacity                  INT,
         temp_c                    DOUBLE,
-        precip_mm                 DOUBLE
+        precip_mm                 DOUBLE,
+        station_state             STRING
     )
     PARTITIONED BY (month(hour))
     LOCATION 's3://{S3_BUCKET}/processed/historical_station_status_1h/'
@@ -256,7 +258,7 @@ def handler(event: Any, context: Any) -> dict:
     writer = csv.writer(csv_buffer)
     writer.writerow([
         "timestamp", "station_id", "checkouts", "checkins", 
-        "net_delta", "estimated_bikes_available", "estimated_docks_available", "capacity"
+        "net_delta", "estimated_bikes_available", "estimated_docks_available", "capacity", "station_state"
     ])
 
     total_records = 0
@@ -267,6 +269,19 @@ def handler(event: Any, context: Any) -> dict:
         for slot in time_slots:
             checkouts, checkins = st_flows.get(slot, (0, 0))
             
+            # Determine state based on starting bikes for this slot
+            state = "NORMAL"
+            if bikes == 0:
+                if checkouts > 0:
+                    state = "REBALANCED_REFILL"
+                else:
+                    state = "STARVED"
+            elif bikes >= cap:
+                if checkins > 0:
+                    state = "REBALANCED_DEPLETE"
+                else:
+                    state = "OVERFLOW"
+            
             # Bounded update
             bikes = max(0, min(cap, bikes + checkins - checkouts))
             docks = cap - bikes
@@ -274,7 +289,7 @@ def handler(event: Any, context: Any) -> dict:
             
             writer.writerow([
                 slot, st_id, checkouts, checkins, net_delta, 
-                float(bikes), float(docks), cap
+                float(bikes), float(docks), cap, state
             ])
             total_records += 1
 
@@ -310,7 +325,8 @@ def handler(event: Any, context: Any) -> dict:
                         {'Name': 'net_delta', 'Type': 'string'},
                         {'Name': 'estimated_bikes_available', 'Type': 'string'},
                         {'Name': 'estimated_docks_available', 'Type': 'string'},
-                        {'Name': 'capacity', 'Type': 'string'}
+                        {'Name': 'capacity', 'Type': 'string'},
+                        {'Name': 'station_state', 'Type': 'string'}
                     ],
                     'Location': f's3://{S3_BUCKET}/tmp/staging_historical_15m/',
                     'InputFormat': 'org.apache.hadoop.mapred.TextInputFormat',
@@ -337,7 +353,8 @@ def handler(event: Any, context: Any) -> dict:
             CAST(net_delta AS INT) AS net_delta,
             CAST(estimated_bikes_available AS DOUBLE) AS estimated_bikes_available,
             CAST(estimated_docks_available AS DOUBLE) AS estimated_docks_available,
-            CAST(capacity AS INT) AS capacity
+            CAST(capacity AS INT) AS capacity,
+            station_state
         FROM {staging_tbl}
         WHERE timestamp IS NOT NULL AND station_id IS NOT NULL
         """
@@ -354,7 +371,14 @@ def handler(event: Any, context: Any) -> dict:
                 CAST(SUM(net_delta) AS INT) AS net_delta,
                 ROUND(AVG(estimated_bikes_available), 2) AS estimated_bikes_available,
                 ROUND(AVG(estimated_docks_available), 2) AS estimated_docks_available,
-                MAX(capacity) AS capacity
+                MAX(capacity) AS capacity,
+                CASE 
+                    WHEN SUM(CASE WHEN station_state = 'REBALANCED_REFILL' THEN 1 ELSE 0 END) > 0 THEN 'REBALANCED_REFILL'
+                    WHEN SUM(CASE WHEN station_state = 'REBALANCED_DEPLETE' THEN 1 ELSE 0 END) > 0 THEN 'REBALANCED_DEPLETE'
+                    WHEN SUM(CASE WHEN station_state = 'STARVED' THEN 1 ELSE 0 END) > 0 THEN 'STARVED'
+                    WHEN SUM(CASE WHEN station_state = 'OVERFLOW' THEN 1 ELSE 0 END) > 0 THEN 'OVERFLOW'
+                    ELSE 'NORMAL'
+                END AS station_state
             FROM historical_station_status_15m
             WHERE timestamp >= TIMESTAMP '{start_time}' AND timestamp < TIMESTAMP '{end_time}'
             GROUP BY 1, 2
@@ -380,7 +404,8 @@ def handler(event: Any, context: Any) -> dict:
                 h.estimated_docks_available,
                 h.capacity,
                 w.temp_c,
-                w.precip_mm
+                w.precip_mm,
+                h.station_state
             FROM hourly_agg h
             LEFT JOIN vw_ecobici_weather_mapping vm
                 ON vm.ecobici_station_id = h.station_id
@@ -402,7 +427,8 @@ def handler(event: Any, context: Any) -> dict:
                 temp_c,
                 LAG(temp_c) OVER (PARTITION BY station_id ORDER BY hour)
             ) AS temp_c,
-            COALESCE(precip_mm, 0.0) AS precip_mm
+            COALESCE(precip_mm, 0.0) AS precip_mm,
+            station_state
         FROM joined
         ORDER BY hour, station_id
         """

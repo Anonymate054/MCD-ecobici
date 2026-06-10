@@ -55,9 +55,8 @@ FORWARD_FILL_MAX_SLOTS = 1   # 1 × 1-hour slot = 1 hour max forward-fill
 OPEN_METEO_URL = (
     "https://api.open-meteo.com/v1/forecast"
     "?latitude={lats}&longitude={lons}"
-    "&hourly=temperature_2m,precipitation"
+    "&current=temperature_2m,precipitation"
     "&timezone=UTC"
-    "&forecast_days=1"
 )
 
 # Max stations per Open-Meteo batch request
@@ -120,17 +119,12 @@ def _load_station_coords() -> list[dict]:
 
 def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
     """
-    Batch-fetch hourly weather from Open-Meteo for all Ecobici stations.
+    Batch-fetch current weather from Open-Meteo for all Ecobici stations.
     Returns a flat list of raw observation dicts matching the internal schema.
     """
     observations = []
     success_count = 0
     last_error = None
-
-    # Round ingest_ts (UTC, e.g. "2026-06-07T03:07:12Z") to current hour
-    # e.g. "2026-06-07T03:00"
-    dt_utc = datetime.strptime(ingest_ts, "%Y-%m-%dT%H:%M:%SZ")
-    target_time_str = dt_utc.strftime("%Y-%m-%dT%H:00")
 
     for i in range(0, len(stations), OPEN_METEO_BATCH_SIZE):
         # Prevent bursting requests and trigger rate limiters (pacing delay)
@@ -170,20 +164,9 @@ def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
             data = [data]
 
         for j, item in enumerate(data):
-            hourly = item.get("hourly", {})
-            times = hourly.get("time", [])
-
-            try:
-                idx = times.index(target_time_str)
-            except ValueError:
-                idx = -1
-
-            if idx != -1:
-                temp_c = hourly.get("temperature_2m", [])[idx]
-                precip = hourly.get("precipitation", [])[idx]
-            else:
-                temp_c = None
-                precip = 0.0
+            current = item.get("current", {})
+            temp_c  = current.get("temperature_2m")
+            precip  = current.get("precipitation", 0.0)
 
             observations.append({
                 "timestamp":  ingest_ts,

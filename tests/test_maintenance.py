@@ -194,8 +194,8 @@ class TestMaintenanceHandler:
             result = m.handler({}, None)
 
         assert result["statusCode"]          == 200
-        assert result["tables_processed"]    == 4   # 4 managed tables
-        assert result["operations_total"]    == 8   # 2 ops × 4 tables
+        assert result["tables_processed"]    == 5   # 5 managed tables
+        assert result["operations_total"]    == 10  # 2 ops × 5 tables
         assert result["failures"]            == 0
 
     def test_handler_returns_207_on_partial_failure(self, aws_mock):

@@ -123,6 +123,7 @@ class TestProcessHistoricalStatus:
         assert int(row_0["net_delta"]) == -2
         assert float(row_0["estimated_bikes_available"]) == 3.0
         assert float(row_0["estimated_docks_available"]) == 7.0
+        assert row_0["station_state"] == "NORMAL"
         
         # Row 2 (00:15:00): checkouts=0, checkins=3 => net_delta=3 => bikes = 3 + 3 = 6. Docks = 4.
         row_1 = next(r for r in rows if r["station_id"] == "1" and r["timestamp"] == "2026-05-01 00:15:00")
@@ -131,6 +132,7 @@ class TestProcessHistoricalStatus:
         assert int(row_1["net_delta"]) == 3
         assert float(row_1["estimated_bikes_available"]) == 6.0
         assert float(row_1["estimated_docks_available"]) == 4.0
+        assert row_1["station_state"] == "NORMAL"
 
         # Verify bounded flow values for station 2 (capacity 20)
         # Initial: 50% capacity = 10 bikes
@@ -141,6 +143,7 @@ class TestProcessHistoricalStatus:
         assert int(row_s2["net_delta"]) == -5
         assert float(row_s2["estimated_bikes_available"]) == 5.0
         assert float(row_s2["estimated_docks_available"]) == 15.0
+        assert row_s2["station_state"] == "NORMAL"
 
     def test_handler_cleanup_on_error(self, mock_env):
         m = _mod()

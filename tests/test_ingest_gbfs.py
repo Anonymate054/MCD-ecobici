@@ -101,11 +101,13 @@ class TestBuildStatusRecords:
         assert r["bikes_available"] == 3
         assert r["is_renting"]      is True
         assert r["is_returning"]    is False
+        assert r["station_state"]   == "NORMAL"
         assert r["timestamp"]       == ts
 
     def test_missing_fields_default_to_zero(self):
         out = _mod()._build_status_records([{"station_id": "1"}], "t")
         assert out[0]["bikes_available"] == 0
+        assert out[0]["station_state"]   == "STARVED"
         assert out[0]["is_renting"]      is False
 
     def test_multiple_stations(self):
