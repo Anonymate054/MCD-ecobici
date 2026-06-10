@@ -73,22 +73,22 @@ class TestMicroClean:
         out = _mod()._micro_clean([self._obs("S1", 999.0)])
         assert len(out) == 0
 
-    def test_forward_fill_applied_up_to_3_slots(self):
+    def test_forward_fill_applied_up_to_1_slot(self):
         ts = [f"2026-01-01T00:{i*10:02d}:00Z" for i in range(4)]
         raw = [self._obs("S1", 25.0, ts=ts[0])] + \
               [self._obs("S1", None, ts=ts[i]) for i in range(1, 4)]
         out = _mod()._micro_clean(raw)
-        assert len(out) == 4
-        for i in range(1, 4):
-            assert out[i]["_is_filled"] is True
-            assert out[i]["temp_c"] == pytest.approx(25.0)
+        assert len(out) == 2  # 1 valid + 1 filled; 2 dropped
+        assert out[1]["_is_filled"] is True
+        assert out[1]["temp_c"] == pytest.approx(25.0)
 
-    def test_forward_fill_stops_after_3_slots(self):
+    def test_forward_fill_stops_after_1_slot(self):
         ts  = [f"2026-01-01T00:{i*10:02d}:00Z" for i in range(6)]
         raw = [self._obs("S1", 25.0, ts=ts[0])] + \
               [self._obs("S1", None, ts=ts[i]) for i in range(1, 6)]
         out = _mod()._micro_clean(raw)
-        assert len(out) == 4   # 1 valid + 3 filled; 2 dropped
+        assert len(out) == 2   # 1 valid + 1 filled; 4 dropped
+
 
     def test_fill_resets_after_valid_reading(self):
         ts = [f"2026-01-01T00:{i*10:02d}:00Z" for i in range(4)]
@@ -118,25 +118,33 @@ class TestWeatherHandler:
     def test_handler_success(self, monkeypatch, secrets, firehose_weather):
         # Override FIREHOSE_STREAM_NAME to the weather-specific stream
         monkeypatch.setenv("FIREHOSE_STREAM_NAME", FIREHOSE_WEATHER_STREAM)
-        payload = {"observations": [
-            {"station_id": "W1", "temp_c": 22.0, "precip_mm": 0.0,
-             "timestamp": "2026-01-01T00:00:00Z"},
-            {"station_id": "W1", "temp_c": 23.0, "precip_mm": 1.2,
-             "timestamp": "2026-01-01T00:10:00Z"},
-        ]}
+        from datetime import datetime, timezone
+        now_hour = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:00")
+        payload = {
+            "hourly": {
+                "time": [now_hour],
+                "temperature_2m": [22.0],
+                "precipitation": [0.0]
+            }
+        }
         with patch("urllib.request.urlopen", return_value=_make_http_response(payload)):
             result = _mod().handler({}, None)
 
         assert result["statusCode"]      == 200
-        assert result["raw_received"]    == 2
-        assert result["records_pushed"]  == 2
+        assert result["raw_received"]    == 1
+        assert result["records_pushed"]  == 1
         assert result["records_dropped"] == 0
 
     def test_handler_drops_invalid_temps(self, secrets, firehose_weather):
-        payload = {"observations": [
-            {"station_id": "W1", "temp_c": 999.0, "precip_mm": 0.0,
-             "timestamp": "2026-01-01T00:00:00Z"},
-        ]}
+        from datetime import datetime, timezone
+        now_hour = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:00")
+        payload = {
+            "hourly": {
+                "time": [now_hour],
+                "temperature_2m": [999.0],
+                "precipitation": [0.0]
+            }
+        }
         with patch("urllib.request.urlopen", return_value=_make_http_response(payload)):
             result = _mod().handler({}, None)
 
@@ -144,8 +152,15 @@ class TestWeatherHandler:
         assert result["records_dropped"] == 1
 
     def test_handler_empty_observations(self, secrets, firehose_weather):
+        payload = {
+            "hourly": {
+                "time": [],
+                "temperature_2m": [],
+                "precipitation": []
+            }
+        }
         with patch("urllib.request.urlopen",
-                   return_value=_make_http_response({"observations": []})):
+                   return_value=_make_http_response(payload)):
             result = _mod().handler({}, None)
 
         assert result["statusCode"]     == 200
@@ -157,3 +172,4 @@ class TestWeatherHandler:
                    side_effect=urllib.error.URLError("Timeout")):
             with pytest.raises(urllib.error.URLError):
                 _mod().handler({}, None)
+

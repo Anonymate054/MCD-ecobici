@@ -124,6 +124,8 @@ def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
     Returns a flat list of raw observation dicts matching the internal schema.
     """
     observations = []
+    success_count = 0
+    last_error = None
 
     # Round ingest_ts (UTC, e.g. "2026-06-07T03:07:12Z") to current hour
     # e.g. "2026-06-07T03:00"
@@ -148,6 +150,7 @@ def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
                 data = _http_get(url)
                 break
             except Exception as exc:
+                last_error = exc
                 if attempt == max_retries - 1:
                     logger.error("Open-Meteo batch %d failed after %d attempts: %s", 
                                  i // OPEN_METEO_BATCH_SIZE, max_retries, exc)
@@ -160,6 +163,8 @@ def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
         if not data:
             logger.warning("Skipping batch starting at index %d due to API failures", i)
             continue
+
+        success_count += 1
 
         if isinstance(data, dict):
             data = [data]
@@ -188,9 +193,13 @@ def _fetch_open_meteo(stations: list[dict], ingest_ts: str) -> list[dict]:
                 "_is_filled": False,
             })
 
+    if len(stations) > 0 and success_count == 0 and last_error:
+        raise last_error
+
     logger.info("Open-Meteo: fetched %d observations (%d batches)", len(observations),
                 (len(stations) + OPEN_METEO_BATCH_SIZE - 1) // OPEN_METEO_BATCH_SIZE)
     return observations
+
 
 
 # ---------------------------------------------------------------------------

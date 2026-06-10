@@ -32,6 +32,12 @@ data "archive_file" "ingest_trips_zip" {
   output_path = "${path.root}/../src/lambdas/ingest_trips.zip"
 }
 
+data "archive_file" "process_historical_status_zip" {
+  type        = "zip"
+  source_file = "${path.root}/../src/lambdas/process_historical_status.py"
+  output_path = "${path.root}/../src/lambdas/process_historical_status.zip"
+}
+
 ##############################################################################
 # CloudWatch Log Groups for Lambdas
 ##############################################################################
@@ -58,6 +64,11 @@ resource "aws_cloudwatch_log_group" "lambda_loader" {
 
 resource "aws_cloudwatch_log_group" "lambda_ingest_trips" {
   name              = "/aws/lambda/${var.project_prefix}-ingest-trips"
+  retention_in_days = 14
+}
+
+resource "aws_cloudwatch_log_group" "lambda_process_historical_status" {
+  name              = "/aws/lambda/${var.project_prefix}-process-historical-status"
   retention_in_days = 14
 }
 
@@ -656,6 +667,14 @@ data "aws_iam_policy_document" "lambda_ingest_trips_policy" {
       "${aws_s3_bucket.datalake.arn}/*",
     ]
   }
+
+  # Lambda — trigger historical status reconstruction
+  statement {
+    sid       = "InvokeProcessHistoricalStatus"
+    effect    = "Allow"
+    actions   = ["lambda:InvokeFunction"]
+    resources = [aws_lambda_function.process_historical_status.arn]
+  }
 }
 
 resource "aws_iam_role_policy" "lambda_ingest_trips" {
@@ -681,10 +700,11 @@ resource "aws_lambda_function" "ingest_trips" {
 
   environment {
     variables = {
-      GLUE_DATABASE    = aws_glue_catalog_database.ecobici.name
-      ATHENA_WORKGROUP = aws_athena_workgroup.main.name
-      S3_BUCKET        = aws_s3_bucket.datalake.id
-      START_MONTH      = "2023-01"
+      GLUE_DATABASE                      = aws_glue_catalog_database.ecobici.name
+      ATHENA_WORKGROUP                   = aws_athena_workgroup.main.name
+      S3_BUCKET                          = aws_s3_bucket.datalake.id
+      START_MONTH                        = "2023-01"
+      PROCESS_HISTORICAL_STATUS_FUNCTION = aws_lambda_function.process_historical_status.function_name
     }
   }
 
@@ -721,3 +741,117 @@ resource "aws_lambda_permission" "eventbridge_invoke_ingest_trips" {
   principal     = "events.amazonaws.com"
   source_arn    = aws_cloudwatch_event_rule.ingest_trips_schedule.arn
 }
+
+##############################################################################
+# IAM — process_historical_status Lambda Role & Policy
+##############################################################################
+
+resource "aws_iam_role" "lambda_process_historical_status" {
+  name               = "${var.project_prefix}-lambda-process-historical-status-role"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+
+  tags = { Name = "${var.project_prefix}-lambda-process-historical-status-role" }
+}
+
+data "aws_iam_policy_document" "lambda_process_historical_status_policy" {
+  # CloudWatch Logs
+  statement {
+    sid    = "CloudWatchLogs"
+    effect = "Allow"
+    actions = ["logs:CreateLogStream", "logs:PutLogEvents"]
+    resources = ["${aws_cloudwatch_log_group.lambda_process_historical_status.arn}:*"]
+  }
+
+  # Athena — submit queries and read results
+  statement {
+    sid    = "AthenaQuery"
+    effect = "Allow"
+    actions = [
+      "athena:StartQueryExecution",
+      "athena:GetQueryExecution",
+      "athena:GetQueryResults",
+      "athena:StopQueryExecution",
+    ]
+    resources = [
+      aws_athena_workgroup.main.arn,
+      "arn:aws:athena:${var.aws_region}:${data.aws_caller_identity.current.account_id}:datacatalog/*",
+    ]
+  }
+
+  # Glue — read/write catalog (tables, databases, partitions)
+  statement {
+    sid    = "GlueCatalog"
+    effect = "Allow"
+    actions = [
+      "glue:GetDatabase",
+      "glue:GetTable",
+      "glue:GetTables",
+      "glue:CreateTable",
+      "glue:DeleteTable",
+      "glue:UpdateTable",
+      "glue:GetPartition",
+      "glue:GetPartitions",
+      "glue:BatchCreatePartition",
+      "glue:BatchDeletePartition",
+    ]
+    resources = [
+      "arn:aws:glue:${var.aws_region}:${data.aws_caller_identity.current.account_id}:catalog",
+      "arn:aws:glue:${var.aws_region}:${data.aws_caller_identity.current.account_id}:database/${aws_glue_catalog_database.ecobici.name}",
+      "arn:aws:glue:${var.aws_region}:${data.aws_caller_identity.current.account_id}:table/${aws_glue_catalog_database.ecobici.name}/*",
+    ]
+  }
+
+  # S3 — read raw/processed files, write staging/target files
+  statement {
+    sid    = "S3DataLake"
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:DeleteObject",
+      "s3:ListBucket",
+      "s3:GetBucketLocation",
+    ]
+    resources = [
+      aws_s3_bucket.datalake.arn,
+      "${aws_s3_bucket.datalake.arn}/*",
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "lambda_process_historical_status" {
+  name   = "process-historical-status-policy"
+  role   = aws_iam_role.lambda_process_historical_status.id
+  policy = data.aws_iam_policy_document.lambda_process_historical_status_policy.json
+}
+
+##############################################################################
+# Lambda — process_historical_status (simulation + rollup)
+##############################################################################
+
+resource "aws_lambda_function" "process_historical_status" {
+  function_name    = "${var.project_prefix}-process-historical-status"
+  description      = "Reconstruct 15-minute and 1-hour historical station status from trips and weather."
+  role             = aws_iam_role.lambda_process_historical_status.arn
+  filename         = data.archive_file.process_historical_status_zip.output_path
+  source_code_hash = data.archive_file.process_historical_status_zip.output_base64sha256
+  handler          = "process_historical_status.handler"
+  runtime          = "python3.12"
+  timeout          = 900
+  memory_size      = 1024
+
+  environment {
+    variables = {
+      GLUE_DATABASE    = aws_glue_catalog_database.ecobici.name
+      ATHENA_WORKGROUP = aws_athena_workgroup.main.name
+      S3_BUCKET        = aws_s3_bucket.datalake.id
+    }
+  }
+
+  depends_on = [
+    aws_cloudwatch_log_group.lambda_process_historical_status,
+  ]
+
+  tags = { Name = "${var.project_prefix}-process-historical-status" }
+}
+

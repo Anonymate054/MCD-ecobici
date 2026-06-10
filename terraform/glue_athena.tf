@@ -258,3 +258,148 @@ resource "aws_glue_catalog_table" "hourly_station_status" {
     }
   }
 }
+
+# --- 5. historical_station_status_15m -----------------------------------------
+
+resource "aws_glue_catalog_table" "historical_station_status_15m" {
+  name          = "historical_station_status_15m"
+  database_name = aws_glue_catalog_database.ecobici.name
+  description   = "15-minute historical station status reconstructed from trips."
+  table_type    = "EXTERNAL_TABLE"
+
+  open_table_format_input {
+    iceberg_input {
+      metadata_operation = "CREATE"
+      version            = "2"
+    }
+  }
+
+  storage_descriptor {
+    location      = "s3://${var.s3_bucket_name}/processed/historical_station_status_15m/"
+    input_format  = "org.apache.iceberg.mr.mapred.IcebergInputFormat"
+    output_format = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+
+    ser_de_info {
+      serialization_library = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+    }
+
+    columns {
+      name    = "timestamp"
+      type    = "timestamp"
+      comment = "Timestamp of the 15-minute interval"
+    }
+    columns {
+      name    = "station_id"
+      type    = "string"
+      comment = "Ecobici station identifier"
+    }
+    columns {
+      name    = "checkouts"
+      type    = "int"
+      comment = "Number of checkouts in this interval"
+    }
+    columns {
+      name    = "checkins"
+      type    = "int"
+      comment = "Number of checkins in this interval"
+    }
+    columns {
+      name    = "net_delta"
+      type    = "int"
+      comment = "Net change in bikes (checkins - checkouts)"
+    }
+    columns {
+      name    = "estimated_bikes_available"
+      type    = "double"
+      comment = "Estimated available bikes at end of interval (bounded)"
+    }
+    columns {
+      name    = "estimated_docks_available"
+      type    = "double"
+      comment = "Estimated available docks at end of interval (bounded)"
+    }
+    columns {
+      name    = "capacity"
+      type    = "int"
+      comment = "Physical bike capacity of the station"
+    }
+  }
+}
+
+# --- 6. historical_station_status_1h ------------------------------------------
+
+resource "aws_glue_catalog_table" "historical_station_status_1h" {
+  name          = "historical_station_status_1h"
+  database_name = aws_glue_catalog_database.ecobici.name
+  description   = "1-hour historical station status summary joined with weather."
+  table_type    = "EXTERNAL_TABLE"
+
+  open_table_format_input {
+    iceberg_input {
+      metadata_operation = "CREATE"
+      version            = "2"
+    }
+  }
+
+  storage_descriptor {
+    location      = "s3://${var.s3_bucket_name}/processed/historical_station_status_1h/"
+    input_format  = "org.apache.iceberg.mr.mapred.IcebergInputFormat"
+    output_format = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+
+    ser_de_info {
+      serialization_library = "org.apache.iceberg.mr.mapred.IcebergOutputFormat"
+    }
+
+    columns {
+      name    = "hour"
+      type    = "timestamp"
+      comment = "Truncated to hour (UTC)"
+    }
+    columns {
+      name    = "station_id"
+      type    = "string"
+      comment = "Ecobici station identifier"
+    }
+    columns {
+      name    = "checkouts"
+      type    = "int"
+      comment = "Total checkouts during this hour"
+    }
+    columns {
+      name    = "checkins"
+      type    = "int"
+      comment = "Total checkins during this hour"
+    }
+    columns {
+      name    = "net_delta"
+      type    = "int"
+      comment = "Total net change in bikes (checkins - checkouts)"
+    }
+    columns {
+      name    = "estimated_bikes_available"
+      type    = "double"
+      comment = "Average estimated bikes available during the hour"
+    }
+    columns {
+      name    = "estimated_docks_available"
+      type    = "double"
+      comment = "Average estimated docks available during the hour"
+    }
+    columns {
+      name    = "capacity"
+      type    = "int"
+      comment = "Physical bike capacity of the station"
+    }
+    columns {
+      name    = "temp_c"
+      type    = "double"
+      comment = "Average hourly temperature in Celsius"
+    }
+    columns {
+      name    = "precip_mm"
+      type    = "double"
+      comment = "Total hourly precipitation in mm"
+    }
+  }
+}
+

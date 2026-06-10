@@ -302,6 +302,28 @@ def handler(event, context):
 
         logger.info("Successfully loaded month %s to Iceberg trips table.", target_ym)
 
+        # Trigger historical status reconstruction asynchronously
+        process_fn = os.environ.get("PROCESS_HISTORICAL_STATUS_FUNCTION")
+        if process_fn:
+            try:
+                import json
+                lambda_client = session.client("lambda")
+                payload = {
+                    "year": year,
+                    "month": month
+                }
+                logger.info("Invoking %s for %s-%s...", process_fn, year, month)
+                lambda_client.invoke(
+                    FunctionName=process_fn,
+                    InvocationType="Event",
+                    Payload=json.dumps(payload).encode("utf-8")
+                )
+                logger.info("Successfully triggered historical status reconstruction.")
+            except Exception as e:
+                logger.error("Failed to trigger historical status reconstruction: %s", e)
+        else:
+            logger.warning("PROCESS_HISTORICAL_STATUS_FUNCTION environment variable not set.")
+
     finally:
         # 9. Cleanup
         logger.info("Cleaning up staging tables and raw CSV...")
@@ -315,3 +337,4 @@ def handler(event, context):
         "statusCode": 200,
         "body": f"Month {target_ym} successfully ingested."
     }
+
